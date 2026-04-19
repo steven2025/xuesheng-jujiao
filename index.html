@@ -28,6 +28,16 @@
       --transition: 220ms ease;
       --maxw: 1120px;
       --pc-base: 16px;
+      --ink-strong: #23314d;
+      --ink-soft: #4f5f7d;
+      --ink-blue: #3157c6;
+      --ink-teal: #1f7e74;
+      --ink-violet: #6d52b5;
+      --ink-amber: #9b6a1d;
+      --tint-blue: rgba(46, 91, 255, 0.06);
+      --tint-teal: rgba(30, 155, 116, 0.07);
+      --tint-violet: rgba(109, 82, 181, 0.07);
+      --tint-amber: rgba(221, 142, 45, 0.08);
     }
 
     * {
@@ -39,7 +49,7 @@
       padding: 0;
       min-height: 100%;
       font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Segoe UI", sans-serif;
-      color: var(--text);
+      color: var(--ink-strong);
       background:
         radial-gradient(circle at top left, rgba(46, 91, 255, 0.10), transparent 28%),
         radial-gradient(circle at right 10% bottom 10%, rgba(30, 155, 116, 0.10), transparent 24%),
@@ -139,7 +149,7 @@
 
     .app-subtitle {
       margin: 0;
-      color: var(--muted);
+      color: var(--ink-soft);
       font-size: 17px;
       line-height: 1.7;
       max-width: 700px;
@@ -463,7 +473,7 @@
       display: block;
       margin-bottom: 8px;
       font-size: 14px;
-      color: var(--muted);
+      color: var(--ink-soft);
       font-weight: 700;
     }
 
@@ -471,14 +481,14 @@
     .select,
     .textarea {
       width: 100%;
-      border: 1px solid rgba(24, 32, 45, 0.12);
-      background: rgba(255, 255, 255, 0.98);
-      color: var(--text);
+      border: 1px solid rgba(69, 93, 141, 0.16);
+      background: rgba(251, 253, 255, 0.98);
+      color: var(--ink-strong);
       border-radius: 14px;
       padding: 13px 16px;
       font-size: 16px;
       outline: none;
-      transition: border-color var(--transition), box-shadow var(--transition);
+      transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
     }
 
     .input:focus,
@@ -1252,6 +1262,173 @@
     .result-divider {
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(24,32,45,0.12), transparent);
+    }
+
+
+    /* 轻度分彩：让各步输入区更好分辨，但不破坏整体布局 */
+    .app-title,
+    .panel-intro h2,
+    .result-title {
+      color: var(--ink-strong);
+    }
+
+    .eyebrow,
+    .progress-label,
+    .progress-hint,
+    .field-subtitle,
+    .profile-note,
+    .result-intro,
+    .candidate-footnote,
+    .metric-tone,
+    .metric-desc,
+    .download-note,
+    .muted-tip {
+      color: var(--ink-soft);
+    }
+
+    .field-title,
+    .activity-title,
+    .scale-question,
+    .download-title,
+    .loading-title,
+    .candidate-title {
+      color: var(--ink-blue);
+    }
+
+    .step-no {
+      color: var(--ink-blue);
+    }
+
+    .field-block,
+    .activity-card,
+    .scale-item,
+    .soft-card,
+    .candidate-card,
+    .mini-note,
+    .interpret-item,
+    .metric-card {
+      background-clip: padding-box;
+    }
+
+    .step-panel > .field-block:nth-of-type(2) {
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), var(--tint-blue));
+      border-color: rgba(46, 91, 255, 0.12);
+    }
+
+    .step-panel > .field-block:nth-of-type(3) {
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), var(--tint-teal));
+      border-color: rgba(30, 155, 116, 0.12);
+    }
+
+    .activity-list .activity-card:nth-child(1) {
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), var(--tint-blue));
+      border-color: rgba(46, 91, 255, 0.13);
+    }
+
+    .activity-list .activity-card:nth-child(2) {
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), var(--tint-teal));
+      border-color: rgba(30, 155, 116, 0.13);
+    }
+
+    .activity-list .activity-card:nth-child(3) {
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), var(--tint-violet));
+      border-color: rgba(109, 82, 181, 0.13);
+    }
+
+    .activity-list .activity-card:nth-child(1) .activity-title,
+    .activity-list .activity-card:nth-child(1) .input-wrap label {
+      color: var(--ink-blue);
+    }
+
+    .activity-list .activity-card:nth-child(2) .activity-title,
+    .activity-list .activity-card:nth-child(2) .input-wrap label {
+      color: var(--ink-teal);
+    }
+
+    .activity-list .activity-card:nth-child(3) .activity-title,
+    .activity-list .activity-card:nth-child(3) .input-wrap label {
+      color: var(--ink-violet);
+    }
+
+    .activity-list .activity-card:nth-child(1) .input,
+    .activity-list .activity-card:nth-child(1) .select {
+      background: rgba(246, 249, 255, 0.98);
+    }
+
+    .activity-list .activity-card:nth-child(2) .input,
+    .activity-list .activity-card:nth-child(2) .select {
+      background: rgba(245, 252, 250, 0.98);
+    }
+
+    .activity-list .activity-card:nth-child(3) .input,
+    .activity-list .activity-card:nth-child(3) .select {
+      background: rgba(248, 246, 255, 0.98);
+    }
+
+    .scale-list .scale-item:nth-child(4n+1) {
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), var(--tint-blue));
+      border-color: rgba(46, 91, 255, 0.12);
+    }
+
+    .scale-list .scale-item:nth-child(4n+2) {
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), var(--tint-teal));
+      border-color: rgba(30, 155, 116, 0.12);
+    }
+
+    .scale-list .scale-item:nth-child(4n+3) {
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), var(--tint-violet));
+      border-color: rgba(109, 82, 181, 0.12);
+    }
+
+    .scale-list .scale-item:nth-child(4n) {
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), var(--tint-amber));
+      border-color: rgba(221, 142, 45, 0.14);
+    }
+
+    .scale-list .scale-item:nth-child(4n+1) .scale-question { color: var(--ink-blue); }
+    .scale-list .scale-item:nth-child(4n+2) .scale-question { color: var(--ink-teal); }
+    .scale-list .scale-item:nth-child(4n+3) .scale-question { color: var(--ink-violet); }
+    .scale-list .scale-item:nth-child(4n) .scale-question { color: var(--ink-amber); }
+
+    .step-panel > .soft-card,
+    .step-panel .profile-visual,
+    .step-panel .metric-summary-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(245, 249, 255, 0.96));
+    }
+
+    .candidate-card:nth-child(3n+1) { border-color: rgba(46, 91, 255, 0.13); }
+    .candidate-card:nth-child(3n+2) { border-color: rgba(30, 155, 116, 0.13); }
+    .candidate-card:nth-child(3n) { border-color: rgba(109, 82, 181, 0.13); }
+
+    .candidate-card:nth-child(3n+1) .candidate-title { color: var(--ink-blue); }
+    .candidate-card:nth-child(3n+2) .candidate-title { color: var(--ink-teal); }
+    .candidate-card:nth-child(3n) .candidate-title { color: var(--ink-violet); }
+
+    .profile-drawer {
+      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(245, 249, 255, 0.94));
+    }
+
+    .profile-drawer .input:nth-of-type(1),
+    .profile-drawer .select:nth-of-type(1),
+    .profile-drawer .textarea:nth-of-type(1) {
+      background: rgba(246, 249, 255, 0.98);
+    }
+
+    .option-card-body {
+      color: #31405d;
+    }
+
+    .option-card:nth-child(odd) .option-card-body {
+      background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(246, 249, 255, 0.96));
+    }
+
+    .option-card:nth-child(even) .option-card-body {
+      background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(245, 251, 249, 0.96));
+    }
+
+    .result-one-liner,
+    .closing-quote {
+      color: var(--ink-strong);
     }
 
 
@@ -2200,23 +2377,29 @@
       showLoading("最后一步：把结构化诊断整理成一张更像反馈卡的结果页。");
 
       const d = state.diagnosis_result || {};
-      const response = await callAI("render_result", {
-        student_name: state.student_name,
-        grade: state.grade,
-        major: state.major,
-        profile_tag: d.profile_tag,
-        focus_level: d.focus_level,
-        mainline_clarity: d.mainline_clarity,
-        time_mismatch: d.time_mismatch,
-        comparison_drive: d.comparison_drive,
-        confirmed_strength: d.confirmed_strength,
-        strength_fit_direction: d.strength_fit_direction,
-        core_problem: d.core_problem,
-        mainline_recommendation: d.mainline_recommendation,
-        reduce_recommendation: d.reduce_recommendation,
-        next_action: d.next_action,
-        reasoning_summary: d.reasoning_summary
-      });
+      const local = state.local_rules || {};
+
+      const payload = {
+        student_name: state.student_name || "",
+        grade: state.grade || "",
+        major: state.major || "",
+        profile_tag: d.profile_tag || local.preliminary_profile_tag || "聚焦反馈",
+        focus_level: Number.isFinite(Number(d.focus_level)) ? Number(d.focus_level) : Number(local.focus_score_local || 58),
+        mainline_clarity: Number.isFinite(Number(d.mainline_clarity)) ? Number(d.mainline_clarity) : Number(local.mainline_clarity_local || 60),
+        time_mismatch: Number.isFinite(Number(d.time_mismatch)) ? Number(d.time_mismatch) : (local.time_mismatch_flag ? 84 : 32),
+        comparison_drive: Number.isFinite(Number(d.comparison_drive)) ? Number(d.comparison_drive) : Number(local.comparison_drive_local || 40),
+        confirmed_strength: d.confirmed_strength || state.strength_confirmation || "",
+        strength_fit_direction: d.strength_fit_direction || local.strongest_activity_reason || "",
+        core_problem: d.core_problem || "",
+        mainline_recommendation: d.mainline_recommendation || "",
+        reduce_recommendation: d.reduce_recommendation || "",
+        next_action: d.next_action || "",
+        reasoning_summary: d.reasoning_summary || local.strongest_activity_reason || ""
+      };
+
+      console.log("[render_result payload]", payload);
+
+      const response = await callAI("render_result", payload);
 
       hideLoading();
 
@@ -3071,17 +3254,31 @@
 
     function normalizeDiagnosisData(data, fallback) {
       const fallbackData = fallback || {};
-      const output = {
-        profile_tag: String(data.profile_tag || fallbackData.profile_tag || state.local_rules.preliminary_profile_tag || "聚焦反馈"),
+      const local = state.local_rules || {};
+
+      return {
+        profile_tag: String(data.profile_tag || fallbackData.profile_tag || local.preliminary_profile_tag || "聚焦反馈"),
         core_problem: String(data.core_problem || fallbackData.core_problem || "你现在更需要做的，不是再加努力，而是让主线更清楚。"),
         mainline_recommendation: String(data.mainline_recommendation || fallbackData.mainline_recommendation || "先保留一条主线。"),
         reduce_recommendation: String(data.reduce_recommendation || fallbackData.reduce_recommendation || "把低回报事务先降频。"),
         next_action: String(data.next_action || fallbackData.next_action || "未来 7 天做两个固定推进动作。"),
         confirmed_strength: String(data.confirmed_strength || state.strength_confirmation || ""),
-        strength_fit_direction: String(data.strength_fit_direction || fallbackData.strength_fit_direction || state.local_rules.strongest_activity_reason || ""),
-        closing_quote: String(data.closing_quote || fallbackData.closing_quote || "")
+        strength_fit_direction: String(data.strength_fit_direction || fallbackData.strength_fit_direction || local.strongest_activity_reason || ""),
+        closing_quote: String(data.closing_quote || fallbackData.closing_quote || ""),
+        focus_level: Number.isFinite(Number(data.focus_level))
+          ? Number(data.focus_level)
+          : Number(local.focus_score_local || 58),
+        mainline_clarity: Number.isFinite(Number(data.mainline_clarity))
+          ? Number(data.mainline_clarity)
+          : Number(local.mainline_clarity_local || 60),
+        time_mismatch: Number.isFinite(Number(data.time_mismatch))
+          ? Number(data.time_mismatch)
+          : (local.time_mismatch_flag ? 84 : 32),
+        comparison_drive: Number.isFinite(Number(data.comparison_drive))
+          ? Number(data.comparison_drive)
+          : Number(local.comparison_drive_local || 40),
+        reasoning_summary: String(data.reasoning_summary || fallbackData.reasoning_summary || local.strongest_activity_reason || "")
       };
-      return output;
     }
 
     
