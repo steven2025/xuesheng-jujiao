@@ -1,0 +1,2619 @@
+<!-- Source prompt: :contentReference[oaicite:0]{index=0} -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>聚焦战略体验</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: rgba(255, 255, 255, 0.92);
+      --card-strong: #ffffff;
+      --text: #18202d;
+      --muted: #6a7381;
+      --line: rgba(21, 33, 56, 0.08);
+      --primary: #2e5bff;
+      --primary-soft: rgba(46, 91, 255, 0.1);
+      --primary-soft-2: rgba(46, 91, 255, 0.18);
+      --success: #1e9b74;
+      --warning: #dd8e2d;
+      --danger: #d75a54;
+      --shadow: 0 18px 60px rgba(17, 24, 39, 0.12);
+      --shadow-soft: 0 8px 24px rgba(17, 24, 39, 0.08);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --transition: 220ms ease;
+      --maxw: 820px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(46, 91, 255, 0.10), transparent 28%),
+        radial-gradient(circle at right 10% bottom 10%, rgba(30, 155, 116, 0.10), transparent 24%),
+        linear-gradient(180deg, #f7f9fd 0%, #f1f4f9 100%);
+    }
+
+    body {
+      padding: 14px;
+    }
+
+    .page-wrap {
+      width: 100%;
+      min-height: calc(100vh - 28px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blur-orb {
+      position: fixed;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      filter: blur(36px);
+      opacity: 0.5;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .blur-orb.orb-a {
+      background: rgba(46, 91, 255, 0.12);
+      top: -40px;
+      left: -30px;
+    }
+
+    .blur-orb.orb-b {
+      background: rgba(30, 155, 116, 0.10);
+      right: -30px;
+      bottom: -40px;
+    }
+
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      width: min(100%, var(--maxw));
+      height: 85vh;
+      min-height: 680px;
+      max-height: 920px;
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .app-header {
+      padding: 22px 20px 10px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(24, 32, 45, 0.05);
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+    }
+
+    .app-title {
+      margin: 10px 0 8px;
+      font-size: 26px;
+      line-height: 1.2;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .app-subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 560px;
+    }
+
+    .profile-toggle {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.85);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      box-shadow: var(--shadow-soft);
+      white-space: nowrap;
+    }
+
+    .profile-toggle:hover {
+      transform: translateY(-1px);
+      border-color: rgba(46, 91, 255, 0.2);
+    }
+
+    .profile-toggle .mini-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      padding: 2px 8px;
+      margin-left: 6px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .profile-drawer {
+      margin: 0 20px 10px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: max-height 280ms ease, opacity 220ms ease, transform 220ms ease, padding 220ms ease;
+      padding: 0 16px;
+    }
+
+    .profile-drawer.open {
+      max-height: 240px;
+      opacity: 1;
+      transform: translateY(0);
+      padding: 16px;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .profile-note {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .progress-wrap {
+      padding: 4px 20px 14px;
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .progress-label,
+    .progress-hint {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .progress-hint {
+      text-align: right;
+      max-width: 58%;
+      line-height: 1.5;
+    }
+
+    .progress-track {
+      position: relative;
+      width: 100%;
+      height: 8px;
+      background: rgba(24, 32, 45, 0.06);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0;
+      background: linear-gradient(90deg, #2e5bff 0%, #7b93ff 100%);
+      border-radius: 999px;
+      transition: width 240ms ease;
+    }
+
+    .progress-steps {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+    }
+
+    .step-dot {
+      height: 36px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      background: rgba(255, 255, 255, 0.75);
+      color: var(--muted);
+      transition: all var(--transition);
+    }
+
+    .step-dot.done {
+      background: rgba(30, 155, 116, 0.12);
+      color: var(--success);
+      border-color: rgba(30, 155, 116, 0.12);
+    }
+
+    .step-dot.current {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border-color: rgba(46, 91, 255, 0.18);
+      box-shadow: inset 0 0 0 1px rgba(46, 91, 255, 0.12);
+    }
+
+    .content-wrap {
+      flex: 1;
+      padding: 6px 20px 14px;
+      overflow: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(24, 32, 45, 0.18) transparent;
+    }
+
+    .content-wrap::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .content-wrap::-webkit-scrollbar-thumb {
+      background: rgba(24, 32, 45, 0.16);
+      border-radius: 999px;
+    }
+
+    .step-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-height: 100%;
+    }
+
+    .panel-intro {
+      background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(248, 250, 255, 0.9) 100%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .step-no {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-soft);
+      margin-bottom: 10px;
+    }
+
+    .panel-intro h2 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      line-height: 1.3;
+    }
+
+    .panel-intro p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .field-block {
+      background: rgba(255,255,255,0.8);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+    }
+
+    .field-title {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .field-subtitle {
+      margin: -4px 0 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .option-grid.tight {
+      gap: 8px;
+    }
+
+    .option-card {
+      display: block;
+      cursor: pointer;
+    }
+
+    .option-card input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .option-card-body {
+      display: block;
+      padding: 14px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.5;
+      transition: all var(--transition);
+      min-height: 56px;
+    }
+
+    .option-card input:checked + .option-card-body {
+      border-color: rgba(46, 91, 255, 0.28);
+      background: linear-gradient(180deg, rgba(46, 91, 255, 0.08) 0%, rgba(46, 91, 255, 0.02) 100%);
+      box-shadow: inset 0 0 0 1px rgba(46, 91, 255, 0.1);
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .option-card-body .option-remark {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .activity-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .activity-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,0.9);
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .activity-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .activity-title {
+      font-weight: 800;
+      font-size: 16px;
+    }
+
+    .activity-tag {
+      font-size: 12px;
+      color: var(--muted);
+      background: rgba(24, 32, 45, 0.05);
+      border-radius: 999px;
+      padding: 5px 9px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .input-wrap label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .input,
+    .select,
+    .textarea {
+      width: 100%;
+      border: 1px solid rgba(24, 32, 45, 0.12);
+      background: rgba(255, 255, 255, 0.98);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .input:focus,
+    .select:focus,
+    .textarea:focus {
+      border-color: rgba(46, 91, 255, 0.35);
+      box-shadow: 0 0 0 4px rgba(46, 91, 255, 0.08);
+    }
+
+    .textarea {
+      min-height: 96px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    .soft-card {
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(248,250,255,0.95), rgba(255,255,255,0.92));
+      box-shadow: var(--shadow-soft);
+    }
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .mini-insight {
+      padding: 12px 13px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid var(--line);
+    }
+
+    .mini-insight strong {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .mini-insight span {
+      display: block;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .scale-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .scale-item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      background: rgba(255,255,255,0.92);
+    }
+
+    .scale-question {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .scale-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+
+    .scale-chip {
+      display: block;
+      cursor: pointer;
+    }
+
+    .scale-chip input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .scale-chip span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.96);
+      font-size: 14px;
+      font-weight: 800;
+      transition: all var(--transition);
+    }
+
+    .scale-chip input:checked + span {
+      color: var(--primary);
+      background: var(--primary-soft);
+      border-color: rgba(46, 91, 255, 0.24);
+      box-shadow: inset 0 0 0 1px rgba(46, 91, 255, 0.12);
+    }
+
+    .scale-legend {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .action-bar {
+      padding: 16px 20px 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      border-top: 1px solid rgba(24, 32, 45, 0.06);
+      background: linear-gradient(180deg, rgba(255,255,255,0.74) 0%, rgba(255,255,255,0.96) 100%);
+    }
+
+    .btn {
+      border: none;
+      border-radius: 16px;
+      min-height: 50px;
+      padding: 12px 16px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition), background var(--transition);
+    }
+
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.48;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, #2e5bff 0%, #6d85ff 100%);
+      box-shadow: 0 12px 30px rgba(46, 91, 255, 0.24);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      background: rgba(24, 32, 45, 0.06);
+    }
+
+    .btn-ghost {
+      color: var(--muted);
+      background: transparent;
+      border: 1px solid rgba(24, 32, 45, 0.08);
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .result-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248, 250, 255, 0.98) 100%);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .result-intro {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .result-title {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .result-one-liner {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.9;
+      color: #223049;
+      background: rgba(24, 32, 45, 0.04);
+      padding: 16px;
+      border-radius: 18px;
+    }
+
+    .result-section {
+      display: grid;
+      gap: 10px;
+    }
+
+    .result-section-title {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .strength-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(255,255,255,0.92);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .advice-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .advice-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid var(--line);
+    }
+
+    .advice-index {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      flex: 0 0 30px;
+    }
+
+    .advice-text {
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .closing-quote {
+      margin: 0;
+      padding: 18px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(46,91,255,0.09), rgba(123,147,255,0.05));
+      color: #223049;
+      font-size: 15px;
+      line-height: 1.8;
+      font-weight: 700;
+    }
+
+    .result-meta {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .meta-card {
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(24,32,45,0.04);
+      border: 1px solid var(--line);
+      line-height: 1.7;
+    }
+
+    .meta-card strong {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .download-zone {
+      border: 1px dashed rgba(24, 32, 45, 0.18);
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(255,255,255,0.72);
+    }
+
+    .download-title {
+      margin: 0 0 8px;
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .download-note {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .download-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .loading-mask {
+      position: fixed;
+      inset: 0;
+      background: rgba(245, 247, 251, 0.76);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 30;
+      padding: 20px;
+    }
+
+    .loading-mask.show {
+      display: flex;
+    }
+
+    .loading-box {
+      width: min(92vw, 360px);
+      background: rgba(255,255,255,0.96);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 22px 20px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .spinner {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 3px solid rgba(46, 91, 255, 0.14);
+      border-top-color: var(--primary);
+      margin: 0 auto 12px;
+      animation: spin 1s linear infinite;
+    }
+
+    .loading-title {
+      font-size: 16px;
+      font-weight: 800;
+      margin: 0 0 6px;
+    }
+
+    .loading-text {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%) translateY(16px);
+      min-width: 220px;
+      max-width: calc(100vw - 24px);
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(24, 32, 45, 0.92);
+      color: #fff;
+      font-size: 13px;
+      line-height: 1.6;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition), transform var(--transition);
+      z-index: 40;
+      text-align: center;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .muted-tip {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (min-width: 700px) {
+      .profile-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .option-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .activity-list {
+        gap: 16px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .insight-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .result-meta {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .download-actions {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .app-shell {
+        height: calc(100vh - 20px);
+        min-height: auto;
+        border-radius: 24px;
+      }
+
+      .app-title {
+        font-size: 22px;
+      }
+
+      .progress-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .progress-hint {
+        max-width: 100%;
+        text-align: left;
+      }
+
+      .action-bar {
+        grid-template-columns: 1fr;
+      }
+
+      .scale-row {
+        gap: 6px;
+      }
+
+      .scale-chip span {
+        height: 40px;
+      }
+
+      .step-dot {
+        height: 32px;
+        font-size: 12px;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+
+      .page-wrap,
+      .app-shell {
+        width: 100%;
+        height: auto;
+        min-height: auto;
+        max-height: none;
+        box-shadow: none;
+        border: none;
+        background: #fff;
+      }
+
+      .app-header,
+      .profile-drawer,
+      .profile-toggle,
+      .progress-wrap,
+      .action-bar,
+      .download-zone,
+      .loading-mask,
+      .toast {
+        display: none !important;
+      }
+
+      .content-wrap {
+        overflow: visible;
+        padding: 0;
+      }
+
+      #resultPrintable {
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="blur-orb orb-a"></div>
+  <div class="blur-orb orb-b"></div>
+
+  <div class="page-wrap">
+    <section class="app-shell">
+      <header class="app-header">
+        <div>
+          <div class="eyebrow">聚焦战略体验 · 单页原型</div>
+          <h1 class="app-title">3分钟看看，你现在到底是太忙，还是没聚焦</h1>
+          <p class="app-subtitle" id="stepHint">方向不表态，时间就会替你表态。</p>
+        </div>
+        <button class="profile-toggle" id="profileToggle" type="button">
+          资料框
+          <span class="mini-badge" id="profileStatusBadge">0/3</span>
+        </button>
+      </header>
+
+      <section class="profile-drawer" id="profileDrawer">
+        <p class="profile-note">
+          这不是登录，只是轻量身份信息。现在不填也能继续，但最终结果前会提醒你补一下，这样反馈会更像写给你本人。
+        </p>
+        <div class="profile-grid">
+          <div class="input-wrap">
+            <label for="student_name">student_name · 学生姓名</label>
+            <input class="input" id="student_name" data-field="student_name" type="text" placeholder="例如：李明" />
+          </div>
+          <div class="input-wrap">
+            <label for="grade">grade · 年级</label>
+            <select class="select" id="grade" data-field="grade">
+              <option value="">请选择年级</option>
+              <option value="大一">大一</option>
+              <option value="大二">大二</option>
+              <option value="大三">大三</option>
+              <option value="大四">大四</option>
+            </select>
+          </div>
+          <div class="input-wrap">
+            <label for="major">major · 专业</label>
+            <input class="input" id="major" data-field="major" type="text" placeholder="例如：计算机 / 材料 / 金融" />
+          </div>
+        </div>
+      </section>
+
+      <section class="progress-wrap">
+        <div class="progress-top">
+          <div class="progress-label" id="progressLabel">第 1 步 / 共 6 步</div>
+          <div class="progress-hint" id="progressHint">别写理想状态，写你最近真的在做的。</div>
+        </div>
+        <div class="progress-track">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-steps" id="progressSteps"></div>
+      </section>
+
+      <main class="content-wrap" id="stepContent"></main>
+      <footer class="action-bar" id="actionBar"></footer>
+    </section>
+  </div>
+
+  <div class="loading-mask" id="loadingMask">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <h3 class="loading-title">正在整理你的聚焦画像</h3>
+      <p class="loading-text" id="loadingText">先跑本地规则，再尝试调用 AI。如果 AI 没回，也会给你一个能用的结果。</p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const API_URL = "https://1311686407-7qj6l1l0q9.ap-guangzhou.tencentscf.com";
+    const STORAGE_KEY = "focus_strategy_state_v1";
+    const TOTAL_STEPS = 6;
+
+    const GOAL_OPTIONS = [
+      "提升学业成绩",
+      "保研/升学准备",
+      "找实习/就业",
+      "做项目/科研/竞赛成果",
+      "我现在还不确定"
+    ];
+
+    const CONFUSION_OPTIONS = [
+      "我事情太多，样样都沾一点",
+      "我很忙，但不知道重点在哪",
+      "我知道要聚焦，但舍不得放",
+      "我不太清楚自己真正擅长什么",
+      "我看别人有成果就容易乱"
+    ];
+
+    const CATEGORY_OPTIONS = [
+      "课程学习",
+      "项目/科研",
+      "竞赛/考试",
+      "实习/兼职",
+      "社团/学生工作",
+      "兴趣/自我提升",
+      "其他"
+    ];
+
+    const WEEKLY_HOUR_OPTIONS = [
+      "0-3 小时",
+      "4-6 小时",
+      "7-10 小时",
+      "11-15 小时",
+      "16+ 小时"
+    ];
+
+    const ACHIEVEMENT_OPTIONS = [
+      "刚开始/只是参与",
+      "有持续推进",
+      "有阶段性成果",
+      "有可展示成果",
+      "已经做得比较突出"
+    ];
+
+    const RELEVANCE_OPTIONS = [
+      "高相关",
+      "中相关",
+      "低相关",
+      "我说不清"
+    ];
+
+    const ENERGY_OPTIONS = [
+      "很消耗",
+      "一般",
+      "比较投入",
+      "越做越有劲"
+    ];
+
+    const DEFAULT_STRENGTH_OPTIONS = [
+      "持续深挖型",
+      "项目推进型",
+      "表达输出型",
+      "组织协同型",
+      "创意探索型",
+      "稳定耐力型",
+      "还不确定 / 系统看走眼了"
+    ];
+
+    const STEP_META = {
+      1: {
+        title: "目标与困惑",
+        hint: "别写理想状态，写你最近真的在做的。"
+      },
+      2: {
+        title: "最近 4 周的主要投入",
+        hint: "主线和时间，有时候不是一回事。"
+      },
+      3: {
+        title: "两个关键判断",
+        hint: "最重要和最耗时，不一定是同一个。"
+      },
+      4: {
+        title: "8 题轻量量表",
+        hint: "不用想太久，按最近的真实状态选。"
+      },
+      5: {
+        title: "优势确认",
+        hint: "别选听起来厉害的，选那个你真的做出来过一点结果的。"
+      },
+      6: {
+        title: "结果页",
+        hint: "方向不表态，时间就会替你表态。"
+      }
+    };
+
+    const STATE_TEMPLATE = () => ({
+      student_name: "",
+      grade: "",
+      major: "",
+      goal: "",
+      main_confusion: "",
+      activities: [
+        { category: "", name: "", weekly_hours: "", achievement_level: "", goal_relevance: "", energy_state: "" },
+        { category: "", name: "", weekly_hours: "", achievement_level: "", goal_relevance: "", energy_state: "" },
+        { category: "", name: "", weekly_hours: "", achievement_level: "", goal_relevance: "", energy_state: "" }
+      ],
+      most_important_activity: "",
+      most_time_consuming_activity: "",
+      scale_answers: {
+        q1: 0, q2: 0, q3: 0, q4: 0, q5: 0, q6: 0, q7: 0, q8: 0
+      },
+      strength_candidates: [],
+      strength_confirmation: "",
+      optional_strength_feedback: "",
+      local_rules: {},
+      diagnosis_result: {},
+      rendered_result: {},
+      current_step: 1
+    });
+
+    let state = STATE_TEMPLATE();
+    let eventsBound = false;
+    let toastTimer = null;
+
+    function initApp() {
+      loadState();
+      bindEvents();
+      syncProfileDrawerInputs();
+      renderProgress();
+      renderStep();
+    }
+
+    function renderProgress() {
+      const current = clamp(state.current_step || 1, 1, TOTAL_STEPS);
+      const percent = ((current - 1) / (TOTAL_STEPS - 1)) * 100;
+      document.getElementById("progressBar").style.width = percent + "%";
+      document.getElementById("progressLabel").textContent = `第 ${current} 步 / 共 ${TOTAL_STEPS} 步`;
+      document.getElementById("progressHint").textContent = STEP_META[current].hint;
+      document.getElementById("stepHint").textContent = STEP_META[current].hint;
+
+      const stepsHtml = Array.from({ length: TOTAL_STEPS }, (_, index) => {
+        const step = index + 1;
+        const cls = step < current ? "step-dot done" : (step === current ? "step-dot current" : "step-dot");
+        return `<div class="${cls}">${step}</div>`;
+      }).join("");
+      document.getElementById("progressSteps").innerHTML = stepsHtml;
+      updateProfileStatus();
+    }
+
+    function renderStep() {
+      state.current_step = clamp(Number(state.current_step) || 1, 1, TOTAL_STEPS);
+      const content = document.getElementById("stepContent");
+      const actionBar = document.getElementById("actionBar");
+
+      if (state.current_step === 1) {
+        content.innerHTML = renderStepOne();
+      } else if (state.current_step === 2) {
+        content.innerHTML = renderStepTwo();
+      } else if (state.current_step === 3) {
+        content.innerHTML = renderStepThree();
+      } else if (state.current_step === 4) {
+        content.innerHTML = renderStepFour();
+      } else if (state.current_step === 5) {
+        content.innerHTML = renderStrengthCandidates();
+      } else {
+        content.innerHTML = renderStepSix();
+      }
+
+      actionBar.innerHTML = renderActionButtons();
+      content.scrollTo({ top: 0, behavior: "smooth" });
+      syncProfileDrawerInputs();
+      saveState();
+      renderProgress();
+    }
+
+    function bindEvents() {
+      if (eventsBound) return;
+      eventsBound = true;
+
+      document.addEventListener("click", async (event) => {
+        const toggle = event.target.closest("#profileToggle");
+        if (toggle) {
+          document.getElementById("profileDrawer").classList.toggle("open");
+          return;
+        }
+
+        const nextBtn = event.target.closest("[data-next]");
+        if (nextBtn) {
+          await handleNext();
+          return;
+        }
+
+        const prevBtn = event.target.closest("[data-prev]");
+        if (prevBtn) {
+          handlePrev();
+          return;
+        }
+
+        const resetBtn = event.target.closest("[data-reset]");
+        if (resetBtn) {
+          resetState();
+          return;
+        }
+
+        const txtBtn = event.target.closest("[data-download='txt']");
+        if (txtBtn) {
+          downloadTxtReport();
+          return;
+        }
+
+        const htmlBtn = event.target.closest("[data-download='html']");
+        if (htmlBtn) {
+          downloadHtmlReport();
+          return;
+        }
+
+        const printBtn = event.target.closest("[data-print]");
+        if (printBtn) {
+          printReport();
+          return;
+        }
+      });
+
+      document.addEventListener("input", handleFormEvent);
+      document.addEventListener("change", handleFormEvent);
+      window.addEventListener("beforeunload", saveState);
+    }
+
+    function handleFormEvent(event) {
+      const target = event.target;
+
+      if (target.dataset.activityField) {
+        const index = Number(target.dataset.activityIndex);
+        const field = target.dataset.activityField;
+        if (!state.activities[index]) return;
+        state.activities[index][field] = target.value;
+      } else if (target.dataset.scaleKey) {
+        state.scale_answers[target.dataset.scaleKey] = Number(target.value);
+      } else if (target.dataset.field) {
+        state[target.dataset.field] = target.value;
+      } else {
+        return;
+      }
+
+      saveState();
+      updateProfileStatus();
+
+      if (state.current_step === 6 && ["student_name", "grade", "major"].includes(target.dataset.field)) {
+        renderStep();
+      }
+    }
+
+    function validateStep(step) {
+      if (step === 1) {
+        if (!state.goal || !state.main_confusion) {
+          showToast("先把你的目标和当下最大的困惑选出来。");
+          return false;
+        }
+      }
+
+      if (step === 2) {
+        const complete = state.activities.every((activity) =>
+          activity.category &&
+          activity.name.trim() &&
+          activity.weekly_hours &&
+          activity.achievement_level &&
+          activity.goal_relevance &&
+          activity.energy_state
+        );
+        if (!complete) {
+          showToast("请把最近 4 周最主要的 3 项投入都补完整。");
+          return false;
+        }
+      }
+
+      if (step === 3) {
+        if (!state.most_important_activity || !state.most_time_consuming_activity) {
+          showToast("这一步只做两个判断，但都要选。");
+          return false;
+        }
+      }
+
+      if (step === 4) {
+        const allAnswered = Object.values(state.scale_answers).every((value) => Number(value) >= 1 && Number(value) <= 5);
+        if (!allAnswered) {
+          showToast("8 道题都要选，按最近的真实状态来。");
+          return false;
+        }
+      }
+
+      if (step === 5) {
+        if (!state.strength_confirmation) {
+          showToast("先确认一个最像你的优势方向。");
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    async function handleNext() {
+      if (!validateStep(state.current_step)) return;
+
+      if (state.current_step === 4) {
+        state.local_rules = runLocalRules(state);
+        state.diagnosis_result = {};
+        state.rendered_result = {};
+        await requestStrengthCandidates();
+        state.current_step = 5;
+        renderStep();
+        return;
+      }
+
+      if (state.current_step === 5) {
+        if (!state.student_name || !state.grade || !state.major) {
+          showToast("你可以继续，但建议把资料框补一下，最终反馈会更贴脸。");
+        }
+        state.local_rules = runLocalRules(state);
+        state.diagnosis_result = {};
+        state.rendered_result = {};
+        await requestDiagnosis();
+        await requestRenderedResult();
+        state.current_step = 6;
+        renderStep();
+        return;
+      }
+
+      if (state.current_step < TOTAL_STEPS) {
+        state.current_step += 1;
+        renderStep();
+      }
+    }
+
+    function handlePrev() {
+      if (state.current_step > 1) {
+        state.current_step -= 1;
+        renderStep();
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (error) {
+        console.warn("saveState error:", error);
+      }
+    }
+
+    function loadState() {
+      const base = STATE_TEMPLATE();
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          state = base;
+          return;
+        }
+        const parsed = JSON.parse(raw);
+        state = {
+          ...base,
+          ...parsed,
+          activities: base.activities.map((item, index) => ({
+            ...item,
+            ...((parsed.activities && parsed.activities[index]) || {})
+          })),
+          scale_answers: {
+            ...base.scale_answers,
+            ...(parsed.scale_answers || {})
+          },
+          local_rules: parsed.local_rules || {},
+          diagnosis_result: parsed.diagnosis_result || {},
+          rendered_result: parsed.rendered_result || {},
+          strength_candidates: Array.isArray(parsed.strength_candidates) ? parsed.strength_candidates : [],
+          current_step: clamp(Number(parsed.current_step) || 1, 1, TOTAL_STEPS)
+        };
+      } catch (error) {
+        console.warn("loadState error:", error);
+        state = base;
+      }
+    }
+
+    function resetState() {
+      const sure = window.confirm("确认清空当前填写，并从第 1 步重新开始吗？");
+      if (!sure) return;
+      state = STATE_TEMPLATE();
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (error) {
+        console.warn("resetState error:", error);
+      }
+      document.getElementById("profileDrawer").classList.remove("open");
+      renderStep();
+      syncProfileDrawerInputs();
+      showToast("已经清空，重新开始。");
+    }
+
+    function runLocalRules(currentState) {
+      const hourMap = {
+        "0-3 小时": 2,
+        "4-6 小时": 5,
+        "7-10 小时": 8.5,
+        "11-15 小时": 13,
+        "16+ 小时": 18
+      };
+      const achievementMap = {
+        "刚开始/只是参与": 1,
+        "有持续推进": 2,
+        "有阶段性成果": 3,
+        "有可展示成果": 4,
+        "已经做得比较突出": 5
+      };
+      const relevanceMap = {
+        "高相关": 5,
+        "中相关": 3,
+        "低相关": 1,
+        "我说不清": 2
+      };
+      const energyMap = {
+        "很消耗": 1,
+        "一般": 2,
+        "比较投入": 4,
+        "越做越有劲": 5
+      };
+
+      const activities = currentState.activities.map((activity, index) => {
+        const hours = hourMap[activity.weekly_hours] || 0;
+        const achievement = achievementMap[activity.achievement_level] || 0;
+        const relevance = relevanceMap[activity.goal_relevance] || 0;
+        const energy = energyMap[activity.energy_state] || 0;
+
+        let strengthScore = relevance * 3.2 + achievement * 2.8 + energy * 2.6 + Math.min(hours, 18) * 0.15;
+        if (activity.goal_relevance === "高相关" && achievement >= 3 && energy >= 4) {
+          strengthScore += 4;
+        }
+        if (activity.energy_state === "越做越有劲") {
+          strengthScore += 1.6;
+        }
+
+        let lowValueScore = hours * 0.42 + (6 - relevance) * 2.6 + (6 - achievement) * 1.7;
+        if (hours >= 11 && relevance <= 2) {
+          lowValueScore += 5;
+        }
+        if (hours >= 11 && achievement <= 2) {
+          lowValueScore += 3;
+        }
+
+        return {
+          ...activity,
+          index,
+          hours,
+          achievement,
+          relevance,
+          energy,
+          strengthScore,
+          lowValueScore
+        };
+      });
+
+      const strongest = [...activities].sort((a, b) => b.strengthScore - a.strengthScore)[0] || null;
+      const lowValue = [...activities].sort((a, b) => b.lowValueScore - a.lowValueScore)[0] || null;
+
+      const q = currentState.scale_answers;
+      const positive = [q.q1, q.q6, q.q7, q.q8].map(Number).reduce((sum, n) => sum + n, 0);
+      const noisy = [q.q2, q.q3, q.q4, q.q5].map(Number).reduce((sum, n) => sum + n, 0);
+
+      const clarityRatio = (positive - 4) / 16;
+      const noiseRatio = (noisy - 4) / 16;
+
+      const mainline_clarity_local = clamp(Math.round(clarityRatio * 100), 0, 100);
+      const comparison_drive_local = clamp(Math.round(((Number(q.q5) - 1) / 4) * 100), 0, 100);
+      const focus_score_local = clamp(Math.round((clarityRatio * 0.65 + (1 - noiseRatio) * 0.35) * 100), 0, 100);
+
+      const strongest_activity_reason = strongest
+        ? buildStrongestReason(strongest)
+        : "你暂时还没明显把时间和成果集中到一件事上。";
+
+      const low_value_high_time_reason = lowValue
+        ? buildLowValueReason(lowValue)
+        : "目前还没有特别明显的高耗时低回报项。";
+
+      const time_mismatch_flag = !!(
+        currentState.most_important_activity &&
+        currentState.most_time_consuming_activity &&
+        currentState.most_important_activity !== currentState.most_time_consuming_activity
+      );
+
+      let preliminary_profile_tag = "稳步积累型";
+
+      if (noiseRatio > 0.72 && clarityRatio < 0.48) {
+        preliminary_profile_tag = "高忙碌低聚焦型";
+      } else if (clarityRatio < 0.42) {
+        preliminary_profile_tag = "主线模糊型";
+      } else if (time_mismatch_flag && lowValue && lowValue.hours >= 7) {
+        preliminary_profile_tag = "时间错配型";
+      } else if (strongest && strongest.relevance <= 2 && strongest.achievement >= 4 && strongest.energy >= 4) {
+        preliminary_profile_tag = "已有优势但用错地方型";
+      } else if (clarityRatio >= 0.62 && noiseRatio > 0.54) {
+        preliminary_profile_tag = "已聚焦但噪音过多型";
+      }
+
+      const mainlinePick = currentState.most_important_activity || (strongest ? strongest.name : "一条值得继续的主线");
+      const reducePick = (lowValue && lowValue.name) || currentState.most_time_consuming_activity || "一类低回报事务";
+
+      const fallback_diagnosis = buildFallbackDiagnosis(
+        preliminary_profile_tag,
+        currentState,
+        strongest,
+        lowValue,
+        mainlinePick,
+        reducePick,
+        time_mismatch_flag
+      );
+
+      return {
+        focus_score_local,
+        mainline_clarity_local,
+        time_mismatch_flag,
+        comparison_drive_local,
+        strongest_activity_name: strongest ? strongest.name : "",
+        strongest_activity_reason,
+        low_value_high_time_activity: lowValue ? lowValue.name : "",
+        low_value_high_time_reason,
+        preliminary_profile_tag,
+        fallback_diagnosis
+      };
+    }
+
+    async function callAI(scene, data) {
+      const apiLooksUnset = !API_URL || /^https:\/\/example\.com\/api\/ai\/?$/.test(API_URL.trim());
+      if (apiLooksUnset) {
+        return {
+          ok: false,
+          scene,
+          error: "API_URL 尚未替换，已切本地兜底。",
+          fallback: true
+        };
+      }
+
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 12000);
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ scene, data }),
+          signal: controller.signal
+        });
+
+        clearTimeout(timer);
+
+        const json = await response.json().catch(() => ({}));
+        if (!response.ok || !json || json.ok !== true) {
+          return {
+            ok: false,
+            scene,
+            error: (json && json.error) || `请求失败（${response.status}）`,
+            fallback: true
+          };
+        }
+
+        return json;
+      } catch (error) {
+        clearTimeout(timer);
+        return {
+          ok: false,
+          scene,
+          error: error.name === "AbortError" ? "请求超时" : (error.message || "网络异常"),
+          fallback: true
+        };
+      }
+    }
+
+    async function requestStrengthCandidates() {
+      showLoading("先跑本地规则，再尝试拿 2-3 个优势候选。");
+      const fallbackCandidates = getFallbackStrengthCandidates(state);
+
+      const response = await callAI("strength_candidates", {
+        goal: state.goal,
+        main_confusion: state.main_confusion,
+        activities: state.activities,
+        most_important_activity: state.most_important_activity,
+        most_time_consuming_activity: state.most_time_consuming_activity,
+        scale_answers: state.scale_answers,
+        local_rules: state.local_rules
+      });
+
+      hideLoading();
+
+      if (response.ok) {
+        const candidates = normalizeStrengthCandidates(response.data);
+        state.strength_candidates = candidates.length ? candidates : fallbackCandidates;
+      } else {
+        state.strength_candidates = fallbackCandidates;
+        showToast("AI 没回稳，优势候选已切到本地判断。");
+      }
+
+      if (!state.strength_candidates.includes(state.strength_confirmation)) {
+        state.strength_confirmation = "";
+      }
+
+      saveState();
+    }
+
+    async function requestDiagnosis() {
+      showLoading("正在把你的主线、时间和优势拼成一个结构化判断。");
+
+      const fallback = state.local_rules.fallback_diagnosis || renderFallbackResult();
+      const response = await callAI("diagnose", {
+        student_name: state.student_name,
+        grade: state.grade,
+        major: state.major,
+        goal: state.goal,
+        main_confusion: state.main_confusion,
+        activities: state.activities,
+        most_important_activity: state.most_important_activity,
+        most_time_consuming_activity: state.most_time_consuming_activity,
+        scale_answers: state.scale_answers,
+        strength_confirmation: state.strength_confirmation,
+        optional_strength_feedback: state.optional_strength_feedback,
+        local_rules: state.local_rules
+      });
+
+      hideLoading();
+
+      if (response.ok) {
+        const aiData = normalizeDiagnosisData(response.data, fallback);
+        state.diagnosis_result = aiData;
+      } else {
+        state.diagnosis_result = normalizeDiagnosisData({}, fallback);
+        showToast("AI 诊断暂时不可用，已用本地规则生成基础结果。");
+      }
+
+      saveState();
+    }
+
+    async function requestRenderedResult() {
+      showLoading("最后一步：把结构化诊断整理成一张更像反馈卡的结果页。");
+
+      const response = await callAI("render_result", {
+        student_name: state.student_name,
+        grade: state.grade,
+        major: state.major,
+        goal: state.goal,
+        strength_confirmation: state.strength_confirmation,
+        diagnosis_result: state.diagnosis_result,
+        local_rules: state.local_rules
+      });
+
+      hideLoading();
+
+      if (response.ok) {
+        state.rendered_result = normalizeRenderedResult(response.data, state.diagnosis_result);
+      } else {
+        state.rendered_result = {};
+        showToast("结果文案未拿到 AI 优化版，已直接用结构化诊断渲染。");
+      }
+
+      saveState();
+    }
+
+    function renderStrengthCandidates() {
+      const local = state.local_rules || runLocalRules(state);
+      const candidates = state.strength_candidates.length ? state.strength_candidates : getFallbackStrengthCandidates(state);
+
+      return `
+        <section class="step-panel">
+          <div class="panel-intro">
+            <span class="step-no">Step 5 / 6</span>
+            <h2>优势确认</h2>
+            <p>别选听起来厉害的，选那个你真的做出来过一点结果的。这个选择会直接影响最终建议的方向。</p>
+          </div>
+
+          <div class="soft-card">
+            <div class="status-chip">${escapeHtml(local.preliminary_profile_tag || "本地初判")}</div>
+            <div class="insight-grid">
+              <div class="mini-insight">
+                <strong>你最可能有积累的地方</strong>
+                <span>${escapeHtml(local.strongest_activity_name || "还没有特别明显的一项")}</span>
+              </div>
+              <div class="mini-insight">
+                <strong>当前最值得警惕的耗时</strong>
+                <span>${escapeHtml(local.low_value_high_time_activity || "暂未识别到明显问题项")}</span>
+              </div>
+              <div class="mini-insight">
+                <strong>时间是否错配</strong>
+                <span>${local.time_mismatch_flag ? "是。你最重要的事和最耗时的事不是同一件。" : "暂时不明显。你的重点和时间投入还算对齐。"}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="field-block">
+            <label class="field-title">从下面 2-3 个候选里，确认一个最像你的优势方向</label>
+            <p class="field-subtitle">如果你觉得 AI 看走眼了，也可以直接选“还不确定 / 系统看走眼了”。</p>
+            <div class="option-grid tight">
+              ${candidates.map((item) => renderChoiceCard("strength_confirmation", item, state.strength_confirmation, true)).join("")}
+              ${!candidates.includes("还不确定 / 系统看走眼了") ? renderChoiceCard("strength_confirmation", "还不确定 / 系统看走眼了", state.strength_confirmation, true) : ""}
+            </div>
+          </div>
+
+          <div class="field-block">
+            <label class="field-title" for="optional_strength_feedback">可选补充：别人最常夸你的一个点是什么</label>
+            <p class="field-subtitle">这一句不用长，像“执行稳”“说得清”“能把事推进下去”这种就够。</p>
+            <textarea
+              class="textarea"
+              id="optional_strength_feedback"
+              data-field="optional_strength_feedback"
+              placeholder="例如：你做事很稳，别人交给你的事情通常能落地。"
+            >${escapeHtml(state.optional_strength_feedback || "")}</textarea>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderDiagnosisResult(data) {
+      const confirmedStrength = data.confirmed_strength || state.strength_confirmation || "还在确认中的优势方向";
+      const strengthFitDirection = data.strength_fit_direction || state.local_rules.strongest_activity_reason || "更适合押注那些你能持续投入、也更容易做出阶段成果的场景。";
+
+      const adviceList = normalizeAdviceList([
+        data.mainline_recommendation,
+        data.reduce_recommendation,
+        data.next_action
+      ], [
+        "先保留一条主线，别让所有事情都默认并行。",
+        "给低回报事务设上限，不要再让它挤占主线时间。",
+        "未来 7 天安排两次固定推进时段，把判断变成动作。"
+      ]);
+
+      return {
+        title: data.profile_tag || state.local_rules.preliminary_profile_tag || "聚焦反馈",
+        one_liner: data.core_problem || "你现在不是不努力，而是需要把最重要的那条线收得更清楚一些。",
+        strength_text: `${confirmedStrength}：${strengthFitDirection}`,
+        advice_list: adviceList,
+        closing_quote: data.closing_quote || "你不需要一下子把所有事做对，只需要先把真正该继续的那件事留在台前。"
+      };
+    }
+
+    function renderFallbackResult() {
+      const fallback = (state.local_rules && state.local_rules.fallback_diagnosis) || {};
+      return renderDiagnosisResult(fallback);
+    }
+
+    function buildPersonalIntro() {
+      const name = (state.student_name || "").trim();
+      const grade = (state.grade || "").trim();
+      const major = (state.major || "").trim();
+
+      const prefix = name ? `${name}同学` : "同学";
+
+      if (grade && major) {
+        return `${prefix}，你目前是${grade}，${major}专业。结合你这次的填写结果——`;
+      }
+      if (grade) {
+        return `${prefix}，你目前处在${grade}。结合你这次的填写结果——`;
+      }
+      if (major) {
+        return `${prefix}，你来自${major}专业。结合你这次的填写结果——`;
+      }
+      return `${prefix}，结合你这次的填写结果——`;
+    }
+
+    function downloadTxtReport() {
+      const report = buildReportPayload();
+      const adviceText = report.advice_list.map((item, index) => `${index + 1}. ${item}`).join("\n");
+      const txt = [
+        "聚焦评估报告",
+        "==============================",
+        `生成日期：${report.date_display}`,
+        `学生姓名：${report.student_name || "同学"}`,
+        `年级：${report.grade || "未填写"}`,
+        `专业：${report.major || "未填写"}`,
+        "",
+        `当前状态标签：${report.title}`,
+        "",
+        "一句话判断：",
+        report.one_liner,
+        "",
+        "优势说明：",
+        report.strength_text,
+        "",
+        "三条建议：",
+        adviceText,
+        "",
+        "结尾金句：",
+        report.closing_quote
+      ].join("\n");
+
+      downloadFile(buildFileName(".txt"), txt, "text/plain;charset=utf-8");
+    }
+
+    function downloadHtmlReport() {
+      const report = buildReportPayload();
+      const html = `
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${escapeHtml(report.filename_base)}</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 28px 18px;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: #f5f7fb;
+      color: #18202d;
+    }
+    .wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 20px 48px rgba(17, 24, 39, 0.10);
+      border: 1px solid rgba(21, 33, 56, 0.08);
+    }
+    .chip {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(46, 91, 255, 0.1);
+      color: #2e5bff;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    h1 {
+      margin: 0 0 14px;
+      font-size: 30px;
+      line-height: 1.2;
+    }
+    p {
+      line-height: 1.8;
+      font-size: 15px;
+    }
+    .block {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(21, 33, 56, 0.08);
+      background: #fbfcff;
+    }
+    .label {
+      font-size: 13px;
+      color: #6a7381;
+      font-weight: 700;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    ol {
+      margin: 10px 0 0 20px;
+      padding: 0;
+    }
+    li {
+      line-height: 1.9;
+      margin-bottom: 8px;
+    }
+    .meta {
+      margin-top: 18px;
+      font-size: 14px;
+      color: #6a7381;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="chip">${escapeHtml(report.title)}</div>
+    <h1>聚焦评估报告</h1>
+    <p>${escapeHtml(report.personal_intro)}</p>
+
+    <div class="block">
+      <div class="label">一句话判断</div>
+      <p>${escapeHtml(report.one_liner)}</p>
+    </div>
+
+    <div class="block">
+      <div class="label">优势说明</div>
+      <p>${escapeHtml(report.strength_text)}</p>
+    </div>
+
+    <div class="block">
+      <div class="label">三条建议</div>
+      <ol>
+        ${report.advice_list.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+      </ol>
+    </div>
+
+    <div class="block">
+      <div class="label">结尾金句</div>
+      <p>${escapeHtml(report.closing_quote)}</p>
+    </div>
+
+    <div class="meta">
+      姓名：${escapeHtml(report.student_name || "同学")}<br />
+      年级：${escapeHtml(report.grade || "未填写")}<br />
+      专业：${escapeHtml(report.major || "未填写")}<br />
+      生成日期：${escapeHtml(report.date_display)}
+    </div>
+  </div>
+</body>
+</html>
+      `.trim();
+
+      downloadFile(buildFileName(".html"), html, "text/html;charset=utf-8");
+    }
+
+    function printReport() {
+      if (state.current_step !== 6) {
+        showToast("先生成结果页，再打印或保存为 PDF。");
+        return;
+      }
+      window.print();
+    }
+
+    function showLoading(message) {
+      const mask = document.getElementById("loadingMask");
+      const text = document.getElementById("loadingText");
+      text.textContent = message || "处理中...";
+      mask.classList.add("show");
+    }
+
+    function hideLoading() {
+      document.getElementById("loadingMask").classList.remove("show");
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2300);
+    }
+
+    function renderStepOne() {
+      return `
+        <section class="step-panel">
+          <div class="panel-intro">
+            <span class="step-no">Step 1 / 6</span>
+            <h2>目标与困惑</h2>
+            <p>不用把自己写得很理性。先把现在最想解决的问题说清，后面才好判断主线到底该落在哪。</p>
+          </div>
+
+          <div class="field-block">
+            <label class="field-title">当前优先目标</label>
+            <div class="option-grid">
+              ${GOAL_OPTIONS.map((item) => renderChoiceCard("goal", item, state.goal)).join("")}
+            </div>
+          </div>
+
+          <div class="field-block">
+            <label class="field-title">当前最大困惑</label>
+            <div class="option-grid">
+              ${CONFUSION_OPTIONS.map((item) => renderChoiceCard("main_confusion", item, state.main_confusion)).join("")}
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderStepTwo() {
+      return `
+        <section class="step-panel">
+          <div class="panel-intro">
+            <span class="step-no">Step 2 / 6</span>
+            <h2>最近 4 周的 3 项主要投入</h2>
+            <p>别写理想中的重要事项，写你最近真的在投时间的三件事。因为很多时候，时间比口头目标更诚实。</p>
+          </div>
+
+          <div class="activity-list">
+            ${state.activities.map((activity, index) => renderActivityCard(activity, index)).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderStepThree() {
+      const options = state.activities.map((activity, index) => {
+        const rawName = activity.name.trim();
+        return {
+          value: rawName,
+          label: rawName ? `事项 ${index + 1} · ${rawName}` : `事项 ${index + 1} · 未命名`
+        };
+      });
+
+      return `
+        <section class="step-panel">
+          <div class="panel-intro">
+            <span class="step-no">Step 3 / 6</span>
+            <h2>两个关键判断</h2>
+            <p>只做两个选择：这学期如果只能保留一件事，会是哪件；而你现在最耗时间的，又是哪件。</p>
+          </div>
+
+          <div class="field-block">
+            <label class="field-title" for="most_important_activity">如果这学期只能保留一件最重要的事，你会保留哪一件</label>
+            <select class="select" id="most_important_activity" data-field="most_important_activity">
+              <option value="">请选择</option>
+              ${options.map((item) => `<option value="${escapeAttr(item.value)}" ${state.most_important_activity === item.value ? "selected" : ""}>${escapeHtml(item.label)}</option>`).join("")}
+            </select>
+          </div>
+
+          <div class="field-block">
+            <label class="field-title" for="most_time_consuming_activity">目前最耗时间的是哪一件</label>
+            <select class="select" id="most_time_consuming_activity" data-field="most_time_consuming_activity">
+              <option value="">请选择</option>
+              ${options.map((item) => `<option value="${escapeAttr(item.value)}" ${state.most_time_consuming_activity === item.value ? "selected" : ""}>${escapeHtml(item.label)}</option>`).join("")}
+            </select>
+          </div>
+        </section>
+      `;
+    }
+
+    function renderStepFour() {
+      const questions = [
+        { key: "q1", text: "我能说清楚，我这学期最重要的目标是什么。" },
+        { key: "q2", text: "我现在同时推进的事情有点太多。" },
+        { key: "q3", text: "我经常在不同任务之间来回切换。" },
+        { key: "q4", text: "我现在最耗时间的事情，未必最有长期价值。" },
+        { key: "q5", text: "我最近的很多决定，会受周围同学影响。" },
+        { key: "q6", text: "我知道哪些事该继续，哪些事该降频。" },
+        { key: "q7", text: "我知道自己最值得押注的一类能力。" },
+        { key: "q8", text: "即使短期看不到回报，我也愿意持续做一条主线。" }
+      ];
+
+      return `
+        <section class="step-panel">
+          <div class="panel-intro">
+            <span class="step-no">Step 4 / 6</span>
+            <h2>8 题轻量量表</h2>
+            <p>不需要追求绝对准确。按你最近 2-4 周的真实状态选 1 到 5 分：1 最不符合，5 最符合。</p>
+          </div>
+
+          <div class="scale-list">
+            ${questions.map((q, index) => `
+              <div class="scale-item">
+                <div class="scale-question">${index + 1}. ${escapeHtml(q.text)}</div>
+                <div class="scale-row">
+                  ${[1, 2, 3, 4, 5].map((score) => `
+                    <label class="scale-chip">
+                      <input
+                        type="radio"
+                        name="${q.key}"
+                        value="${score}"
+                        data-scale-key="${q.key}"
+                        ${Number(state.scale_answers[q.key]) === score ? "checked" : ""}
+                      />
+                      <span>${score}</span>
+                    </label>
+                  `).join("")}
+                </div>
+                <div class="scale-legend">
+                  <span>1 = 不太符合</span>
+                  <span>5 = 很符合</span>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function renderStepSix() {
+      const result = getDisplayResultModel();
+      const local = state.local_rules || {};
+      const adviceList = normalizeAdviceList(result.advice_list, [
+        "先把最重要的一件事明确写下来，别再默认所有事情都同等重要。",
+        "给当前低回报事务设上限，别让它无限扩张。",
+        "接下来 7 天，安排两次固定推进时段，把建议真的做一遍。"
+      ]);
+
+      return `
+        <section class="step-panel">
+          <article class="result-card" id="resultPrintable">
+            <div class="status-chip">状态标签 · ${escapeHtml(result.title)}</div>
+            <p class="result-intro">${escapeHtml(buildPersonalIntro())}</p>
+            <h2 class="result-title">${escapeHtml(result.title)}</h2>
+            <p class="result-one-liner">${escapeHtml(result.one_liner)}</p>
+
+            <div class="result-section">
+              <div class="result-section-title">优势说明</div>
+              <div class="strength-card">${escapeHtml(result.strength_text)}</div>
+            </div>
+
+            <div class="result-section">
+              <div class="result-section-title">三条建议</div>
+              <div class="advice-list">
+                ${adviceList.map((item, index) => `
+                  <div class="advice-item">
+                    <div class="advice-index">${index + 1}</div>
+                    <div class="advice-text">${escapeHtml(item)}</div>
+                  </div>
+                `).join("")}
+              </div>
+            </div>
+
+            <div class="result-section">
+              <div class="result-section-title">结尾</div>
+              <p class="closing-quote">${escapeHtml(result.closing_quote)}</p>
+            </div>
+
+            <div class="result-meta">
+              <div class="meta-card">
+                <strong>当前更像</strong>
+                ${escapeHtml(local.preliminary_profile_tag || result.title)}
+              </div>
+              <div class="meta-card">
+                <strong>你最可能值得押注的事项</strong>
+                ${escapeHtml(local.strongest_activity_name || "还在形成中")}
+              </div>
+              <div class="meta-card">
+                <strong>当前最该降频的一类事务</strong>
+                ${escapeHtml(local.low_value_high_time_activity || "暂未识别到明显项")}
+              </div>
+              <div class="meta-card">
+                <strong>时间是否错配</strong>
+                ${local.time_mismatch_flag ? "是。你最重要的事和最耗时的事不一致。" : "暂时不明显。你的时间分配与重点还算一致。"}
+              </div>
+            </div>
+
+            <div class="download-zone">
+              <h3 class="download-title">下载这份结果</h3>
+              <p class="download-note">
+                你可以下载 TXT 报告、HTML 报告，或者直接打印 / 保存为 PDF。
+                如果姓名没填，报告里会默认用“同学”称呼。
+              </p>
+              <div class="download-actions">
+                <button class="btn btn-secondary" type="button" data-download="txt">下载 TXT 报告</button>
+                <button class="btn btn-secondary" type="button" data-download="html">下载 HTML 报告</button>
+                <button class="btn btn-primary" type="button" data-print>打印 / 保存为 PDF</button>
+              </div>
+            </div>
+          </article>
+        </section>
+      `;
+    }
+
+    function renderActionButtons() {
+      if (state.current_step === 6) {
+        return `
+          <button class="btn btn-secondary" type="button" data-prev>返回上一步</button>
+          <button class="btn btn-primary" type="button" data-reset>重新开始</button>
+        `;
+      }
+
+      const nextLabelMap = {
+        1: "继续",
+        2: "继续",
+        3: "继续",
+        4: "看优势候选",
+        5: "生成结果"
+      };
+
+      return `
+        <button class="btn btn-secondary" type="button" data-prev ${state.current_step === 1 ? "disabled" : ""}>上一步</button>
+        <button class="btn btn-primary" type="button" data-next>${nextLabelMap[state.current_step] || "下一步"}</button>
+      `;
+    }
+
+    function renderActivityCard(activity, index) {
+      return `
+        <div class="activity-card">
+          <div class="activity-head">
+            <div class="activity-title">事项 ${index + 1}</div>
+            <div class="activity-tag">最近 4 周真实投入</div>
+          </div>
+          <div class="form-grid">
+            <div class="input-wrap">
+              <label for="activity_category_${index}">事项类别</label>
+              <select class="select" id="activity_category_${index}" data-activity-index="${index}" data-activity-field="category">
+                <option value="">请选择</option>
+                ${CATEGORY_OPTIONS.map((item) => `<option value="${escapeAttr(item)}" ${activity.category === item ? "selected" : ""}>${escapeHtml(item)}</option>`).join("")}
+              </select>
+            </div>
+
+            <div class="input-wrap">
+              <label for="activity_name_${index}">事项简短名称</label>
+              <input
+                class="input"
+                id="activity_name_${index}"
+                type="text"
+                data-activity-index="${index}"
+                data-activity-field="name"
+                value="${escapeAttr(activity.name || "")}"
+                placeholder="例如：高数复习 / 实验室项目 / 简历修改"
+              />
+            </div>
+
+            <div class="input-wrap">
+              <label for="activity_hours_${index}">每周投入</label>
+              <select class="select" id="activity_hours_${index}" data-activity-index="${index}" data-activity-field="weekly_hours">
+                <option value="">请选择</option>
+                ${WEEKLY_HOUR_OPTIONS.map((item) => `<option value="${escapeAttr(item)}" ${activity.weekly_hours === item ? "selected" : ""}>${escapeHtml(item)}</option>`).join("")}
+              </select>
+            </div>
+
+            <div class="input-wrap">
+              <label for="activity_achievement_${index}">当前程度</label>
+              <select class="select" id="activity_achievement_${index}" data-activity-index="${index}" data-activity-field="achievement_level">
+                <option value="">请选择</option>
+                ${ACHIEVEMENT_OPTIONS.map((item) => `<option value="${escapeAttr(item)}" ${activity.achievement_level === item ? "selected" : ""}>${escapeHtml(item)}</option>`).join("")}
+              </select>
+            </div>
+
+            <div class="input-wrap">
+              <label for="activity_relevance_${index}">与当前目标关系</label>
+              <select class="select" id="activity_relevance_${index}" data-activity-index="${index}" data-activity-field="goal_relevance">
+                <option value="">请选择</option>
+                ${RELEVANCE_OPTIONS.map((item) => `<option value="${escapeAttr(item)}" ${activity.goal_relevance === item ? "selected" : ""}>${escapeHtml(item)}</option>`).join("")}
+              </select>
+            </div>
+
+            <div class="input-wrap">
+              <label for="activity_energy_${index}">做这件事时的状态</label>
+              <select class="select" id="activity_energy_${index}" data-activity-index="${index}" data-activity-field="energy_state">
+                <option value="">请选择</option>
+                ${ENERGY_OPTIONS.map((item) => `<option value="${escapeAttr(item)}" ${activity.energy_state === item ? "selected" : ""}>${escapeHtml(item)}</option>`).join("")}
+              </select>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderChoiceCard(field, value, currentValue, isFullOptions) {
+      const checked = currentValue === value;
+      const remark = isFullOptions && value === "还不确定 / 系统看走眼了"
+        ? `<span class="option-remark">没关系，先承认不确定，也是一种清楚。</span>`
+        : "";
+      return `
+        <label class="option-card">
+          <input
+            type="radio"
+            name="${escapeAttr(field)}"
+            value="${escapeAttr(value)}"
+            data-field="${escapeAttr(field)}"
+            ${checked ? "checked" : ""}
+          />
+          <span class="option-card-body">
+            ${escapeHtml(value)}
+            ${remark}
+          </span>
+        </label>
+      `;
+    }
+
+    function normalizeStrengthCandidates(data) {
+      let candidates = [];
+
+      if (Array.isArray(data)) {
+        candidates = data;
+      } else if (data && Array.isArray(data.strength_candidates)) {
+        candidates = data.strength_candidates;
+      } else if (data && Array.isArray(data.candidates)) {
+        candidates = data.candidates;
+      } else if (data && Array.isArray(data.list)) {
+        candidates = data.list;
+      }
+
+      candidates = candidates
+        .map((item) => {
+          if (typeof item === "string") return item.trim();
+          if (item && typeof item === "object") {
+            return String(item.label || item.name || item.value || "").trim();
+          }
+          return "";
+        })
+        .filter(Boolean)
+        .filter((item, index, arr) => DEFAULT_STRENGTH_OPTIONS.includes(item) && arr.indexOf(item) === index);
+
+      if (candidates.length < 2) {
+        const fallback = getFallbackStrengthCandidates(state);
+        candidates = dedupeArray([...candidates, ...fallback]);
+      }
+
+      return candidates.slice(0, 3);
+    }
+
+    function normalizeDiagnosisData(data, fallback) {
+      const fallbackData = fallback || {};
+      const output = {
+        profile_tag: String(data.profile_tag || fallbackData.profile_tag || state.local_rules.preliminary_profile_tag || "聚焦反馈"),
+        core_problem: String(data.core_problem || fallbackData.core_problem || "你现在更需要做的，不是再加努力，而是让主线更清楚。"),
+        mainline_recommendation: String(data.mainline_recommendation || fallbackData.mainline_recommendation || "先保留一条主线。"),
+        reduce_recommendation: String(data.reduce_recommendation || fallbackData.reduce_recommendation || "把低回报事务先降频。"),
+        next_action: String(data.next_action || fallbackData.next_action || "未来 7 天做两个固定推进动作。"),
+        confirmed_strength: String(data.confirmed_strength || state.strength_confirmation || ""),
+        strength_fit_direction: String(data.strength_fit_direction || fallbackData.strength_fit_direction || state.local_rules.strongest_activity_reason || ""),
+        closing_quote: String(data.closing_quote || fallbackData.closing_quote || "")
+      };
+      return output;
+    }
+
+    function normalizeRenderedResult(data, diagnosis) {
+      const diagnosisView = renderDiagnosisResult(diagnosis || {});
+      const adviceList = normalizeAdviceList(data && data.advice_list, diagnosisView.advice_list);
+      return {
+        title: String((data && data.title) || diagnosisView.title || "聚焦反馈"),
+        one_liner: String((data && data.one_liner) || diagnosisView.one_liner || ""),
+        strength_text: String((data && data.strength_text) || diagnosisView.strength_text || ""),
+        advice_list: adviceList,
+        closing_quote: String((data && data.closing_quote) || diagnosisView.closing_quote || "")
+      };
+    }
+
+    function getDisplayResultModel() {
+      if (state.rendered_result && state.rendered_result.title) {
+        return {
+          ...state.rendered_result,
+          advice_list: normalizeAdviceList(state.rendered_result.advice_list, renderDiagnosisResult(state.diagnosis_result).advice_list)
+        };
+      }
+      if (state.diagnosis_result && Object.keys(state.diagnosis_result).length) {
+        return renderDiagnosisResult(state.diagnosis_result);
+      }
+      return renderFallbackResult();
+    }
+
+    function getFallbackStrengthCandidates(currentState) {
+      const local = currentState.local_rules && Object.keys(currentState.local_rules).length
+        ? currentState.local_rules
+        : runLocalRules(currentState);
+
+      const strongestName = local.strongest_activity_name;
+      const strongest = currentState.activities.find((item) => item.name.trim() === strongestName);
+
+      const picks = [];
+
+      if (strongest) {
+        if (["项目/科研", "实习/兼职", "竞赛/考试"].includes(strongest.category)) {
+          picks.push("项目推进型");
+        }
+        if (["课程学习", "项目/科研"].includes(strongest.category) && ["有阶段性成果", "有可展示成果", "已经做得比较突出"].includes(strongest.achievement_level)) {
+          picks.push("持续深挖型");
+        }
+        if (["社团/学生工作"].includes(strongest.category)) {
+          picks.push("组织协同型");
+        }
+        if (["兴趣/自我提升", "其他"].includes(strongest.category) && strongest.energy_state === "越做越有劲") {
+          picks.push("创意探索型");
+        }
+      }
+
+      if (Number(currentState.scale_answers.q7) >= 4) {
+        picks.push("持续深挖型");
+      }
+      if (Number(currentState.scale_answers.q8) >= 4) {
+        picks.push("稳定耐力型");
+      }
+      if (Number(currentState.scale_answers.q6) >= 4 && ["社团/学生工作", "项目/科研"].some((cat) => currentState.activities.some((a) => a.category === cat))) {
+        picks.push("项目推进型");
+      }
+      if (Number(currentState.scale_answers.q5) <= 2 && Number(currentState.scale_answers.q1) >= 3) {
+        picks.push("稳定耐力型");
+      }
+
+      const result = dedupeArray([...picks, ...DEFAULT_STRENGTH_OPTIONS]).filter((item) => item !== "还不确定 / 系统看走眼了");
+      return result.slice(0, 3);
+    }
+
+    function buildFallbackDiagnosis(tag, currentState, strongest, lowValue, mainlinePick, reducePick, timeMismatch) {
+      const strengthHint = currentState.strength_confirmation || guessStrengthLabel(strongest, currentState);
+      let coreProblem = "";
+      let mainlineRecommendation = "";
+      let reduceRecommendation = "";
+      let nextAction = "";
+
+      if (tag === "高忙碌低聚焦型") {
+        coreProblem = "你现在更像是事情很多、节奏很满，但主线还没有被明确写出来，所以每件事都像要做，结果谁都没真正吃透。";
+        mainlineRecommendation = `这学期先把主线收束到「${mainlinePick}」，它要成为你排时间时默认优先的那一件。`;
+        reduceRecommendation = `把「${reducePick}」从默认全开改成有上限参与，不再让它无限吃掉你的注意力。`;
+        nextAction = `未来 7 天，把和「${mainlinePick}」有关的两次固定推进时段先锁进日程里，每次 60-90 分钟。`;
+      } else if (tag === "主线模糊型") {
+        coreProblem = "你不是不努力，而是目标、能力和时间之间还没对齐，所以容易忙着忙着就失去判断标准。";
+        mainlineRecommendation = `先给「${mainlinePick}」一个更明确的定义：这学期它要产出什么，做到什么程度，才算真的在推进。`;
+        reduceRecommendation = `把「${reducePick}」从“继续做”改成“只保留最低必要投入”，别让不确定感逼你什么都留。`;
+        nextAction = `这一周写下一个 3 行版主线说明：我要押注什么、为什么是它、接下来先推进哪一步。`;
+      } else if (tag === "时间错配型") {
+        coreProblem = timeMismatch
+          ? "你最重要的事和最耗时间的事不是同一件，这意味着你心里的主线和日历里的主线还没对上。"
+          : "你现在的时间分配和真正想要的结果之间，已经出现了错位。";
+        mainlineRecommendation = `把「${mainlinePick}」设成每周固定投入项，先保证它有稳定、可见的时间块。`;
+        reduceRecommendation = `优先给「${reducePick}」设上限：能降频就降频，不能降频就限定每周投入时长。`;
+        nextAction = `接下来 7 天做一次时间对账：把实际花时写下来，看是不是在为「${mainlinePick}」留出了足够窗口。`;
+      } else if (tag === "已有优势但用错地方型") {
+        coreProblem = "你并不是没有优势，问题更像是你已经有一块做得出来的地方，但它和当前目标之间还没连上。";
+        mainlineRecommendation = `尝试把你的优势方向「${strengthHint}」重新接到「${mainlinePick}」上，让成果能对你的阶段目标更有积累感。`;
+        reduceRecommendation = `如果「${reducePick}」只是让你持续消耗但不能积累优势，建议尽快降频，不再把高质量时间投进去。`;
+        nextAction = `这一周先做一个小动作：把你最有把握的一项能力，转成一个能展示、能复用、能继续沉淀的小成果。`;
+      } else if (tag === "已聚焦但噪音过多型") {
+        coreProblem = "你的主线其实已经有了，但周围的临时任务、比较心态或额外承诺还在不断打断它。";
+        mainlineRecommendation = `继续把「${mainlinePick}」放在首位，并给它设一个不被轻易挤占的固定推进时段。`;
+        reduceRecommendation = `对「${reducePick}」做一次降频，不一定彻底放掉，但要明确：它不能再挤进你的黄金时间。`;
+        nextAction = `未来一周试一次“先主线后回应”：先完成主线推进，再处理额外请求或临时事务。`;
+      } else {
+        coreProblem = "你已经有一定聚焦基础，但接下来真正拉开差距的，不是再多做几件事，而是把优势持续压到一条线上。";
+        mainlineRecommendation = `把「${mainlinePick}」继续保留下来，并给它更清晰的节奏和阶段结果。`;
+        reduceRecommendation = `如果「${reducePick}」不是必须项，就把它降到维持型投入，不要再占用高质量时段。`;
+        nextAction = `接下来 7 天，把一项你已经有推进感的事情再往前推一步，尽量形成一个可展示的小结果。`;
+      }
+
+      return {
+        profile_tag: tag,
+        core_problem: coreProblem,
+        mainline_recommendation: mainlineRecommendation,
+        reduce_recommendation: reduceRecommendation,
+        next_action: nextAction,
+        confirmed_strength: currentState.strength_confirmation || "",
+        strength_fit_direction: strongest ? buildStrongestReason(strongest) : `你更适合把自己的优势放在「${mainlinePick}」这条线里持续做深，而不是平均分配到每一件事上。`,
+        closing_quote: "不是所有事情都值得同时推进。能留下来的那条线，才有机会变成真正的积累。"
+      };
+    }
+
+    function buildStrongestReason(activity) {
+      if (!activity) return "你最值得押注的，往往是那些你能做出一点成果、而且越做越有劲的事情。";
+      const bits = [];
+      if (activity.goal_relevance >= 4) bits.push("和你当前目标关系很近");
+      if (activity.achievement >= 3) bits.push("已经不只是参与，而是有了推进或成果");
+      if (activity.energy >= 4) bits.push("你做它时不是硬撑，而是有投入感");
+      if (activity.hours >= 7) bits.push("你也确实在给它分配时间");
+      const text = bits.length ? bits.join("、") : "它已经显示出一些可继续放大的信号";
+      return `「${activity.name}」更像你值得押注的方向，因为它${text}。`;
+    }
+
+    function buildLowValueReason(activity) {
+      if (!activity) return "目前还没有特别明显的高耗时低回报项。";
+      const reasons = [];
+      if (activity.hours >= 11) reasons.push("花时明显偏高");
+      if (activity.relevance <= 2) reasons.push("和当前目标关系偏弱");
+      if (activity.achievement <= 2) reasons.push("投入不少，但成果感还不强");
+      const text = reasons.length ? reasons.join("，") : "它可能正在吃掉你的注意力";
+      return `「${activity.name}」值得警惕，因为它${text}。`;
+    }
+
+    function guessStrengthLabel(strongest, currentState) {
+      if (!strongest) {
+        if (Number(currentState.scale_answers.q8) >= 4) return "稳定耐力型";
+        return "持续深挖型";
+      }
+      if (["项目/科研", "实习/兼职", "竞赛/考试"].includes(strongest.category)) return "项目推进型";
+      if (["社团/学生工作"].includes(strongest.category)) return "组织协同型";
+      if (["兴趣/自我提升", "其他"].includes(strongest.category) && strongest.energy >= 4) return "创意探索型";
+      if (strongest.achievement >= 4 && strongest.energy >= 4) return "持续深挖型";
+      return "稳定耐力型";
+    }
+
+    function buildReportPayload() {
+      const result = getDisplayResultModel();
+      const today = new Date();
+      const dateDisplay = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+      const nameForDisplay = (state.student_name || "").trim() || "同学";
+      const filenameBase = `${nameForDisplay}_聚焦评估报告_${dateDisplay}`;
+      return {
+        student_name: (state.student_name || "").trim(),
+        grade: (state.grade || "").trim(),
+        major: (state.major || "").trim(),
+        title: result.title,
+        one_liner: result.one_liner,
+        strength_text: result.strength_text,
+        advice_list: normalizeAdviceList(result.advice_list, []),
+        closing_quote: result.closing_quote,
+        date_display: dateDisplay,
+        personal_intro: buildPersonalIntro(),
+        filename_base: filenameBase
+      };
+    }
+
+    function buildFileName(ext) {
+      const report = buildReportPayload();
+      return `${report.filename_base}${ext}`;
+    }
+
+    function downloadFile(filename, content, mimeType) {
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = filename;
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
+      URL.revokeObjectURL(url);
+    }
+
+    function syncProfileDrawerInputs() {
+      const nameInput = document.getElementById("student_name");
+      const gradeInput = document.getElementById("grade");
+      const majorInput = document.getElementById("major");
+      if (nameInput) nameInput.value = state.student_name || "";
+      if (gradeInput) gradeInput.value = state.grade || "";
+      if (majorInput) majorInput.value = state.major || "";
+      updateProfileStatus();
+    }
+
+    function updateProfileStatus() {
+      const filled = [state.student_name, state.grade, state.major].filter((item) => String(item || "").trim()).length;
+      const badge = document.getElementById("profileStatusBadge");
+      if (badge) {
+        badge.textContent = `${filled}/3`;
+      }
+    }
+
+    function normalizeAdviceList(list, fallback) {
+      const arr = Array.isArray(list) ? list : [];
+      const normalized = arr
+        .map((item) => String(item || "").trim())
+        .filter(Boolean);
+
+      const defaults = (fallback || []).map((item) => String(item || "").trim()).filter(Boolean);
+      const merged = dedupeArray([...normalized, ...defaults]);
+
+      while (merged.length < 3) {
+        merged.push("先把主线留出来，再决定哪些事值得继续加码。");
+      }
+      return merged.slice(0, 3);
+    }
+
+    function dedupeArray(list) {
+      return list.filter((item, index) => item && list.indexOf(item) === index);
+    }
+
+    function clamp(value, min, max) {
+      return Math.min(max, Math.max(min, value));
+    }
+
+    function escapeHtml(value) {
+      return String(value == null ? "" : value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
+    function escapeAttr(value) {
+      return escapeHtml(value).replace(/"/g, "&quot;");
+    }
+
+    window.addEventListener("DOMContentLoaded", initApp);
+  </script>
+</body>
+</html>
