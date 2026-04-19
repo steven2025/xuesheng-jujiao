@@ -1,10 +1,10 @@
-<!-- Source prompt: :contentReference[oaicite:0]{index=0} -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>聚焦战略体验</title>
+  <link rel="icon" href="data:,">
   <style>
     :root {
       --bg: #f5f7fb;
@@ -26,7 +26,8 @@
       --radius-md: 16px;
       --radius-sm: 12px;
       --transition: 220ms ease;
-      --maxw: 820px;
+      --maxw: 1120px;
+      --pc-base: 16px;
     }
 
     * {
@@ -46,17 +47,19 @@
     }
 
     body {
-      padding: 14px;
+      padding: 22px;
+      font-size: var(--pc-base);
     }
 
     .page-wrap {
       width: 100%;
-      min-height: calc(100vh - 28px);
+      min-height: calc(100vh - 44px);
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       position: relative;
-      overflow: hidden;
+      overflow: visible;
+      padding: 8px 0 24px;
     }
 
     .blur-orb {
@@ -85,10 +88,8 @@
     .app-shell {
       position: relative;
       z-index: 1;
-      width: min(100%, var(--maxw));
-      height: 85vh;
-      min-height: 680px;
-      max-height: 920px;
+      width: min(96vw, var(--maxw));
+      min-height: 820px;
       background: var(--card);
       border: 1px solid rgba(255, 255, 255, 0.7);
       border-radius: var(--radius-xl);
@@ -96,11 +97,11 @@
       backdrop-filter: blur(18px);
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      overflow: visible;
     }
 
     .app-header {
-      padding: 22px 20px 10px;
+      padding: 28px 28px 14px;
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
@@ -112,17 +113,17 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 10px;
+      padding: 7px 12px;
       border-radius: 999px;
       background: rgba(24, 32, 45, 0.05);
       color: var(--muted);
-      font-size: 12px;
+      font-size: 13px;
       letter-spacing: 0.06em;
     }
 
     .app-title {
-      margin: 10px 0 8px;
-      font-size: 26px;
+      margin: 12px 0 10px;
+      font-size: 38px;
       line-height: 1.2;
       font-weight: 800;
       letter-spacing: -0.02em;
@@ -131,18 +132,18 @@
     .app-subtitle {
       margin: 0;
       color: var(--muted);
-      font-size: 14px;
-      line-height: 1.6;
-      max-width: 560px;
+      font-size: 17px;
+      line-height: 1.7;
+      max-width: 700px;
     }
 
     .profile-toggle {
       border: 1px solid var(--line);
       background: rgba(255, 255, 255, 0.85);
       color: var(--text);
-      border-radius: 14px;
-      padding: 10px 12px;
-      font-size: 14px;
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-size: 15px;
       font-weight: 700;
       cursor: pointer;
       transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
@@ -195,14 +196,14 @@
     }
 
     .profile-note {
-      margin: 0 0 12px;
+      margin: 0 0 14px;
       color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
+      font-size: 15px;
+      line-height: 1.7;
     }
 
     .progress-wrap {
-      padding: 4px 20px 14px;
+      padding: 6px 28px 18px;
     }
 
     .progress-top {
@@ -215,7 +216,7 @@
 
     .progress-label,
     .progress-hint {
-      font-size: 13px;
+      font-size: 15px;
       color: var(--muted);
     }
 
@@ -253,14 +254,14 @@
     }
 
     .step-dot {
-      height: 36px;
-      border-radius: 12px;
+      height: 40px;
+      border-radius: 14px;
       border: 1px solid var(--line);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 13px;
+      font-size: 14px;
       background: rgba(255, 255, 255, 0.75);
       color: var(--muted);
       transition: all var(--transition);
@@ -281,10 +282,11 @@
 
     .content-wrap {
       flex: 1;
-      padding: 6px 20px 14px;
-      overflow: auto;
+      padding: 10px 28px 108px;
+      overflow: visible;
       scrollbar-width: thin;
       scrollbar-color: rgba(24, 32, 45, 0.18) transparent;
+      scroll-padding-bottom: 120px;
     }
 
     .content-wrap::-webkit-scrollbar {
@@ -299,7 +301,7 @@
     .step-panel {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px;
       min-height: 100%;
     }
 
@@ -324,16 +326,16 @@
     }
 
     .panel-intro h2 {
-      margin: 0 0 8px;
-      font-size: 22px;
+      margin: 0 0 10px;
+      font-size: 28px;
       line-height: 1.3;
     }
 
     .panel-intro p {
       margin: 0;
       color: var(--muted);
-      line-height: 1.7;
-      font-size: 14px;
+      line-height: 1.8;
+      font-size: 16px;
     }
 
     .field-block {
@@ -346,16 +348,16 @@
     .field-title {
       display: block;
       margin-bottom: 12px;
-      font-size: 15px;
+      font-size: 18px;
       font-weight: 800;
       color: var(--text);
     }
 
     .field-subtitle {
-      margin: -4px 0 12px;
+      margin: -2px 0 14px;
       color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
+      font-size: 15px;
+      line-height: 1.7;
     }
 
     .option-grid {
@@ -381,15 +383,15 @@
 
     .option-card-body {
       display: block;
-      padding: 14px 14px;
+      padding: 16px 16px;
       border-radius: var(--radius-md);
       border: 1px solid var(--line);
       background: rgba(255, 255, 255, 0.95);
       color: var(--text);
-      font-size: 14px;
-      line-height: 1.5;
+      font-size: 16px;
+      line-height: 1.6;
       transition: all var(--transition);
-      min-height: 56px;
+      min-height: 64px;
     }
 
     .option-card input:checked + .option-card-body {
@@ -432,7 +434,7 @@
 
     .activity-title {
       font-weight: 800;
-      font-size: 16px;
+      font-size: 18px;
     }
 
     .activity-tag {
@@ -452,7 +454,7 @@
     .input-wrap label {
       display: block;
       margin-bottom: 8px;
-      font-size: 13px;
+      font-size: 14px;
       color: var(--muted);
       font-weight: 700;
     }
@@ -465,8 +467,8 @@
       background: rgba(255, 255, 255, 0.98);
       color: var(--text);
       border-radius: 14px;
-      padding: 12px 14px;
-      font-size: 14px;
+      padding: 13px 16px;
+      font-size: 16px;
       outline: none;
       transition: border-color var(--transition), box-shadow var(--transition);
     }
@@ -508,15 +510,15 @@
 
     .mini-insight strong {
       display: block;
-      font-size: 13px;
+      font-size: 14px;
       color: var(--muted);
       margin-bottom: 6px;
     }
 
     .mini-insight span {
       display: block;
-      font-size: 14px;
-      line-height: 1.6;
+      font-size: 16px;
+      line-height: 1.7;
     }
 
     .scale-list {
@@ -528,21 +530,21 @@
     .scale-item {
       border: 1px solid var(--line);
       border-radius: var(--radius-md);
-      padding: 14px;
+      padding: 18px;
       background: rgba(255,255,255,0.92);
     }
 
     .scale-question {
-      font-size: 14px;
+      font-size: 17px;
       font-weight: 700;
-      line-height: 1.6;
-      margin-bottom: 10px;
+      line-height: 1.7;
+      margin-bottom: 12px;
     }
 
     .scale-row {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
+      grid-template-columns: repeat(5, minmax(72px, 1fr));
+      gap: 10px;
     }
 
     .scale-chip {
@@ -560,11 +562,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 44px;
+      height: 52px;
       border: 1px solid var(--line);
-      border-radius: 14px;
+      border-radius: 16px;
       background: rgba(255,255,255,0.96);
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 800;
       transition: all var(--transition);
     }
@@ -579,26 +581,30 @@
     .scale-legend {
       display: flex;
       justify-content: space-between;
-      font-size: 12px;
+      font-size: 14px;
       color: var(--muted);
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
     .action-bar {
-      padding: 16px 20px 20px;
+      position: sticky;
+      bottom: 0;
+      z-index: 5;
+      padding: 18px 28px 22px;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 14px;
       border-top: 1px solid rgba(24, 32, 45, 0.06);
-      background: linear-gradient(180deg, rgba(255,255,255,0.74) 0%, rgba(255,255,255,0.96) 100%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.98) 100%);
+      backdrop-filter: blur(12px);
     }
 
     .btn {
       border: none;
-      border-radius: 16px;
-      min-height: 50px;
-      padding: 12px 16px;
-      font-size: 15px;
+      border-radius: 18px;
+      min-height: 56px;
+      padding: 14px 18px;
+      font-size: 16px;
       font-weight: 800;
       cursor: pointer;
       transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition), background var(--transition);
@@ -640,11 +646,11 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 12px;
+      padding: 9px 13px;
       border-radius: 999px;
       background: var(--primary-soft);
       color: var(--primary);
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 800;
     }
 
@@ -661,25 +667,25 @@
 
     .result-intro {
       color: var(--muted);
-      line-height: 1.8;
-      font-size: 14px;
+      line-height: 1.9;
+      font-size: 16px;
       margin: 0;
     }
 
     .result-title {
       margin: 0;
-      font-size: 28px;
-      line-height: 1.2;
+      font-size: 36px;
+      line-height: 1.15;
       letter-spacing: -0.02em;
     }
 
     .result-one-liner {
       margin: 0;
-      font-size: 15px;
-      line-height: 1.9;
+      font-size: 18px;
+      line-height: 1.95;
       color: #223049;
-      background: rgba(24, 32, 45, 0.04);
-      padding: 16px;
+      background: rgba(24, 32, 45, 0.05);
+      padding: 18px;
       border-radius: 18px;
     }
 
@@ -699,10 +705,10 @@
     .strength-card {
       border: 1px solid var(--line);
       border-radius: 18px;
-      padding: 16px;
+      padding: 18px;
       background: rgba(255,255,255,0.92);
-      line-height: 1.8;
-      font-size: 15px;
+      line-height: 1.9;
+      font-size: 16px;
     }
 
     .advice-list {
@@ -734,18 +740,18 @@
     }
 
     .advice-text {
-      line-height: 1.8;
-      font-size: 14px;
+      line-height: 1.9;
+      font-size: 16px;
     }
 
     .closing-quote {
       margin: 0;
-      padding: 18px;
+      padding: 20px;
       border-radius: 18px;
       background: linear-gradient(135deg, rgba(46,91,255,0.09), rgba(123,147,255,0.05));
       color: #223049;
-      font-size: 15px;
-      line-height: 1.8;
+      font-size: 17px;
+      line-height: 1.9;
       font-weight: 700;
     }
 
@@ -756,11 +762,12 @@
     }
 
     .meta-card {
-      padding: 14px;
+      padding: 16px;
       border-radius: 16px;
       background: rgba(24,32,45,0.04);
       border: 1px solid var(--line);
-      line-height: 1.7;
+      line-height: 1.8;
+      font-size: 15px;
     }
 
     .meta-card strong {
@@ -779,15 +786,15 @@
 
     .download-title {
       margin: 0 0 8px;
-      font-size: 15px;
+      font-size: 18px;
       font-weight: 800;
     }
 
     .download-note {
       margin: 0 0 14px;
       color: var(--muted);
-      font-size: 13px;
-      line-height: 1.7;
+      font-size: 15px;
+      line-height: 1.8;
     }
 
     .download-actions {
@@ -833,16 +840,16 @@
     }
 
     .loading-title {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 800;
       margin: 0 0 6px;
     }
 
     .loading-text {
       margin: 0;
-      font-size: 13px;
+      font-size: 15px;
       color: var(--muted);
-      line-height: 1.7;
+      line-height: 1.8;
     }
 
     .toast {
@@ -850,14 +857,14 @@
       left: 50%;
       bottom: 18px;
       transform: translateX(-50%) translateY(16px);
-      min-width: 220px;
+      min-width: 240px;
       max-width: calc(100vw - 24px);
-      padding: 12px 14px;
+      padding: 14px 16px;
       border-radius: 14px;
       background: rgba(24, 32, 45, 0.92);
       color: #fff;
-      font-size: 13px;
-      line-height: 1.6;
+      font-size: 15px;
+      line-height: 1.7;
       box-shadow: var(--shadow);
       opacity: 0;
       pointer-events: none;
@@ -884,6 +891,361 @@
     .hidden {
       display: none !important;
     }
+
+    .strength-hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .profile-visual {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 220px;
+      padding: 20px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at top right, rgba(46, 91, 255, 0.14), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,0.98), rgba(246,249,255,0.96));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .profile-visual h3,
+    .metric-hero h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      line-height: 1.3;
+    }
+
+    .profile-visual p,
+    .metric-hero p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .profile-badge-row,
+    .signal-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .signal-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(24,32,45,0.05);
+      font-size: 14px;
+      color: #24324b;
+      font-weight: 700;
+    }
+
+    .signal-chip.positive {
+      background: rgba(30, 155, 116, 0.12);
+      color: var(--success);
+    }
+
+    .signal-chip.warning {
+      background: rgba(221, 142, 45, 0.14);
+      color: var(--warning);
+    }
+
+    .signal-chip.danger {
+      background: rgba(215, 90, 84, 0.12);
+      color: var(--danger);
+    }
+
+    .signal-chip.primary {
+      background: rgba(46, 91, 255, 0.10);
+      color: var(--primary);
+    }
+
+    .candidate-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .candidate-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.94);
+      box-shadow: var(--shadow-soft);
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .candidate-card:hover {
+      transform: translateY(-1px);
+    }
+
+    .candidate-card input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .candidate-card-body {
+      display: block;
+      padding: 18px 18px 16px;
+    }
+
+    .candidate-card input:checked + .candidate-card-body {
+      border-color: rgba(46, 91, 255, 0.3);
+      background: linear-gradient(180deg, rgba(46, 91, 255, 0.08), rgba(255,255,255,0.98));
+      box-shadow: inset 0 0 0 1px rgba(46, 91, 255, 0.12);
+    }
+
+    .candidate-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .candidate-title {
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .candidate-score {
+      font-size: 14px;
+      color: var(--muted);
+      white-space: nowrap;
+      font-weight: 700;
+    }
+
+    .match-bar {
+      position: relative;
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(24,32,45,0.07);
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .match-bar > span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #2e5bff 0%, #7b93ff 100%);
+    }
+
+    .candidate-reason {
+      font-size: 16px;
+      line-height: 1.85;
+      color: #223049;
+      margin: 0 0 14px;
+    }
+
+    .candidate-footnote {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .candidate-tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .candidate-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      background: rgba(24,32,45,0.05);
+      color: #33415c;
+    }
+
+    .metric-hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .metric-summary-card {
+      min-height: 220px;
+      padding: 22px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at top right, rgba(46, 91, 255, 0.14), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,0.98), rgba(246,249,255,0.96));
+      box-shadow: var(--shadow-soft);
+    }
+
+    .metric-summary-card .summary-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(24,32,45,0.05);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .metric-summary-card .summary-copy {
+      font-size: 18px;
+      line-height: 1.95;
+      color: #1f2b43;
+      margin: 0;
+    }
+
+    .metric-side-note {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .mini-note {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.94);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .mini-note strong {
+      display: block;
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .mini-note span {
+      display: block;
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .metric-card {
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.96);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .metric-card strong {
+      display: block;
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .metric-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .metric-value {
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .metric-tone {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--muted);
+    }
+
+    .metric-bar {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(24,32,45,0.07);
+      overflow: hidden;
+      margin: 12px 0 10px;
+    }
+
+    .metric-bar > span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #2e5bff 0%, #7b93ff 100%);
+    }
+
+    .metric-desc {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #31415b;
+      margin: 0;
+    }
+
+    .report-interpretation {
+      display: grid;
+      gap: 12px;
+    }
+
+    .interpret-item {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.94);
+      line-height: 1.85;
+      font-size: 16px;
+    }
+
+    .interpret-item strong {
+      font-size: 14px;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .advice-item {
+      align-items: stretch;
+    }
+
+    .advice-index {
+      margin-top: 2px;
+    }
+
+    .advice-note {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 6px;
+      line-height: 1.6;
+    }
+
+    .result-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(24,32,45,0.12), transparent);
+    }
+
 
     @keyframes spin {
       to {
@@ -919,21 +1281,65 @@
       .download-actions {
         grid-template-columns: 1fr 1fr 1fr;
       }
+
+      .candidate-list {
+        grid-template-columns: 1fr 1fr;
+      }
     }
 
     @media (max-width: 640px) {
+      body {
+        padding: 14px;
+      }
+
+      .page-wrap {
+        min-height: calc(100vh - 28px);
+        padding: 0;
+      }
+
       .app-shell {
+        width: 100%;
         height: calc(100vh - 20px);
         min-height: auto;
         border-radius: 24px;
+        overflow: hidden;
+      }
+
+      .app-header,
+      .progress-wrap,
+      .content-wrap,
+      .action-bar {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .content-wrap {
+        overflow: auto;
+        padding-bottom: 92px;
       }
 
       .app-title {
-        font-size: 22px;
+        font-size: 24px;
+      }
+
+      .app-subtitle,
+      .result-intro,
+      .field-subtitle,
+      .candidate-reason,
+      .strength-card,
+      .advice-text {
+        font-size: 15px;
+      }
+
+      .progress-top,
+      .metric-hero,
+      .strength-hero {
+        flex-direction: column;
+        grid-template-columns: 1fr;
+        align-items: flex-start;
       }
 
       .progress-top {
-        flex-direction: column;
         align-items: flex-start;
       }
 
@@ -947,16 +1353,28 @@
       }
 
       .scale-row {
+        grid-template-columns: repeat(5, 1fr);
         gap: 6px;
       }
 
+      .metric-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
       .scale-chip span {
-        height: 40px;
+        height: 42px;
       }
 
       .step-dot {
         height: 32px;
         font-size: 12px;
+      }
+
+      .candidate-list,
+      .result-meta,
+      .download-actions {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -1649,9 +2067,10 @@
       }
     }
 
+    async 
     async function requestStrengthCandidates() {
       showLoading("先跑本地规则，再尝试拿 2-3 个优势候选。");
-      const fallbackCandidates = getFallbackStrengthCandidates(state);
+      const fallbackCandidates = getFallbackStrengthCandidateCards(state);
 
       const response = await callAI("strength_candidates", {
         goal: state.goal,
@@ -1673,7 +2092,7 @@
         showToast("AI 没回稳，优势候选已切到本地判断。");
       }
 
-      if (!state.strength_candidates.includes(state.strength_confirmation)) {
+      if (!normalizeCandidateList(state.strength_candidates).some((item) => item.type === state.strength_confirmation)) {
         state.strength_confirmation = "";
       }
 
@@ -1712,17 +2131,27 @@
       saveState();
     }
 
+    async 
     async function requestRenderedResult() {
       showLoading("最后一步：把结构化诊断整理成一张更像反馈卡的结果页。");
 
+      const d = state.diagnosis_result || {};
       const response = await callAI("render_result", {
         student_name: state.student_name,
         grade: state.grade,
         major: state.major,
-        goal: state.goal,
-        strength_confirmation: state.strength_confirmation,
-        diagnosis_result: state.diagnosis_result,
-        local_rules: state.local_rules
+        profile_tag: d.profile_tag,
+        focus_level: d.focus_level,
+        mainline_clarity: d.mainline_clarity,
+        time_mismatch: d.time_mismatch,
+        comparison_drive: d.comparison_drive,
+        confirmed_strength: d.confirmed_strength,
+        strength_fit_direction: d.strength_fit_direction,
+        core_problem: d.core_problem,
+        mainline_recommendation: d.mainline_recommendation,
+        reduce_recommendation: d.reduce_recommendation,
+        next_action: d.next_action,
+        reasoning_summary: d.reasoning_summary
       });
 
       hideLoading();
@@ -1737,60 +2166,83 @@
       saveState();
     }
 
+    
     function renderStrengthCandidates() {
       const local = state.local_rules || runLocalRules(state);
-      const candidates = state.strength_candidates.length ? state.strength_candidates : getFallbackStrengthCandidates(state);
+      const candidates = normalizeCandidateList(state.strength_candidates).length
+        ? normalizeCandidateList(state.strength_candidates)
+        : getFallbackStrengthCandidateCards(state);
 
       return `
         <section class="step-panel">
           <div class="panel-intro">
             <span class="step-no">Step 5 / 6</span>
-            <h2>优势确认</h2>
-            <p>别选听起来厉害的，选那个你真的做出来过一点结果的。这个选择会直接影响最终建议的方向。</p>
+            <h2>优势画像确认</h2>
+            <p>这一页不只是让你二选一，而是让你看清：你更像哪种人，为什么像，以及这种劲头该投到哪条线上。</p>
           </div>
 
-          <div class="soft-card">
-            <div class="status-chip">${escapeHtml(local.preliminary_profile_tag || "本地初判")}</div>
-            <div class="insight-grid">
-              <div class="mini-insight">
-                <strong>你最可能有积累的地方</strong>
-                <span>${escapeHtml(local.strongest_activity_name || "还没有特别明显的一项")}</span>
+          <div class="strength-hero">
+            <div class="profile-visual">
+              <div>
+                <div class="status-chip">${escapeHtml(local.preliminary_profile_tag || "本地初判")}</div>
+                <h3>你当前的状态，不像没能力，更像没给能力安排主位。</h3>
+                <p>${escapeHtml(getProfileNarrative(local))}</p>
               </div>
-              <div class="mini-insight">
-                <strong>当前最值得警惕的耗时</strong>
-                <span>${escapeHtml(local.low_value_high_time_activity || "暂未识别到明显问题项")}</span>
+              <div class="profile-badge-row">
+                ${renderSignalChip(local.strongest_activity_name ? `可押注：${local.strongest_activity_name}` : "主线仍在形成", "positive")}
+                ${renderSignalChip(local.low_value_high_time_activity ? `该降频：${local.low_value_high_time_activity}` : "暂未识别拖拽项", local.low_value_high_time_activity ? "warning" : "primary")}
+                ${renderSignalChip(local.time_mismatch_flag ? "时间与主线错位" : "时间与主线基本对齐", local.time_mismatch_flag ? "danger" : "positive")}
               </div>
-              <div class="mini-insight">
-                <strong>时间是否错配</strong>
-                <span>${local.time_mismatch_flag ? "是。你最重要的事和最耗时的事不是同一件。" : "暂时不明显。你的重点和时间投入还算对齐。"}</span>
+            </div>
+
+            <div class="soft-card">
+              <div class="status-chip">怎么选更准</div>
+              <div class="insight-grid">
+                <div class="mini-insight">
+                  <strong>别选听起来厉害的</strong>
+                  <span>选那个你已经做出一点结果、而且做起来不全靠硬撑的方向。</span>
+                </div>
+                <div class="mini-insight">
+                  <strong>看“能否沉淀”</strong>
+                  <span>真正适合押注的优势，不只让你忙，它会越做越有资产感。</span>
+                </div>
+                <div class="mini-insight">
+                  <strong>允许系统看走眼</strong>
+                  <span>如果都不像，就直说不像。清醒比配合系统更值钱。</span>
+                </div>
               </div>
             </div>
           </div>
 
           <div class="field-block">
-            <label class="field-title">从下面 2-3 个候选里，确认一个最像你的优势方向</label>
-            <p class="field-subtitle">如果你觉得 AI 看走眼了，也可以直接选“还不确定 / 系统看走眼了”。</p>
-            <div class="option-grid tight">
-              ${candidates.map((item) => renderChoiceCard("strength_confirmation", item, state.strength_confirmation, true)).join("")}
-              ${!candidates.includes("还不确定 / 系统看走眼了") ? renderChoiceCard("strength_confirmation", "还不确定 / 系统看走眼了", state.strength_confirmation, true) : ""}
+            <label class="field-title">从下面几张画像卡里，确认一个最像你的方向</label>
+            <p class="field-subtitle">每张卡都带了匹配条和解释。别光看名字，重点看“为什么像”。</p>
+            <div class="candidate-list">
+              ${candidates.map((item, index) => renderStrengthCandidateCard(item, index, local)).join("")}
+              ${!candidates.some((item) => item.type === "还不确定 / 系统看走眼了") ? renderStrengthCandidateCard({
+                type: "还不确定 / 系统看走眼了",
+                reason: "目前这些标签都不够像你。没关系，先承认不确定，也比硬认一个人设要诚实。"
+              }, candidates.length, local) : ""}
             </div>
           </div>
 
           <div class="field-block">
             <label class="field-title" for="optional_strength_feedback">可选补充：别人最常夸你的一个点是什么</label>
-            <p class="field-subtitle">这一句不用长，像“执行稳”“说得清”“能把事推进下去”这种就够。</p>
+            <p class="field-subtitle">一句就够。像“执行稳”“说得清”“能把事往前拱”“耐得住长期活”。</p>
             <textarea
               class="textarea"
               id="optional_strength_feedback"
               data-field="optional_strength_feedback"
-              placeholder="例如：你做事很稳，别人交给你的事情通常能落地。"
+              placeholder="例如：你做事不一定快，但通常靠谱；大家一散，你还在往前推。"
             >${escapeHtml(state.optional_strength_feedback || "")}</textarea>
           </div>
         </section>
       `;
     }
 
+    
     function renderDiagnosisResult(data) {
+      const local = state.local_rules || {};
       const confirmedStrength = data.confirmed_strength || state.strength_confirmation || "还在确认中的优势方向";
       const strengthFitDirection = data.strength_fit_direction || state.local_rules.strongest_activity_reason || "更适合押注那些你能持续投入、也更容易做出阶段成果的场景。";
 
@@ -1799,17 +2251,27 @@
         data.reduce_recommendation,
         data.next_action
       ], [
-        "先保留一条主线，别让所有事情都默认并行。",
-        "给低回报事务设上限，不要再让它挤占主线时间。",
-        "未来 7 天安排两次固定推进时段，把判断变成动作。"
+        "别再让所有事情默认并行。能坐主位的，只能有一件。",
+        "把低回报事务设上限。礼貌可以保留，时间别再外借。",
+        "未来 7 天锁两段完整时间，只服务主线，不接零碎活。"
       ]);
+
+      const metrics = {
+        focus_level: Number.isFinite(Number(data.focus_level)) ? Number(data.focus_level) : Number(local.focus_score_local || 58),
+        mainline_clarity: Number.isFinite(Number(data.mainline_clarity)) ? Number(data.mainline_clarity) : Number(local.mainline_clarity_local || 60),
+        time_mismatch: Number.isFinite(Number(data.time_mismatch)) ? Number(data.time_mismatch) : (local.time_mismatch_flag ? 84 : 32),
+        comparison_drive: Number.isFinite(Number(data.comparison_drive)) ? Number(data.comparison_drive) : Number(local.comparison_drive_local || 40)
+      };
 
       return {
         title: data.profile_tag || state.local_rules.preliminary_profile_tag || "聚焦反馈",
-        one_liner: data.core_problem || "你现在不是不努力，而是需要把最重要的那条线收得更清楚一些。",
+        personal_intro: buildPersonalIntro(),
+        one_liner: data.core_problem || "你不是不努力。你只是把时间借给了不该坐主位的事。",
         strength_text: `${confirmedStrength}：${strengthFitDirection}`,
         advice_list: adviceList,
-        closing_quote: data.closing_quote || "你不需要一下子把所有事做对，只需要先把真正该继续的那件事留在台前。"
+        closing_quote: data.closing_quote || "别什么都端着。能留下来的那条线，才配叫主线。",
+        reasoning_summary: data.reasoning_summary || local.strongest_activity_reason || "你的优势并不弱，真正的问题是节奏和主线还没站到同一边。",
+        metrics
       };
     }
 
@@ -1837,9 +2299,11 @@
       return `${prefix}，结合你这次的填写结果——`;
     }
 
+    
     function downloadTxtReport() {
       const report = buildReportPayload();
       const adviceText = report.advice_list.map((item, index) => `${index + 1}. ${item}`).join("\n");
+      const metricText = report.metrics.map((item) => `- ${item.label}：${item.value} / 100（${item.tone}）\n  ${item.description}`).join("\n");
       const txt = [
         "聚焦评估报告",
         "==============================",
@@ -1853,11 +2317,22 @@
         "一句话判断：",
         report.one_liner,
         "",
+        "四项指标：",
+        metricText,
+        "",
         "优势说明：",
         report.strength_text,
         "",
+        "进一步解释：",
+        report.reasoning_summary || "你的问题不在能力本身，而在主线和时间还没完全站到同一边。",
+        "",
         "三条建议：",
         adviceText,
+        "",
+        "关键提醒：",
+        `主线候选：${report.strongest_activity_name || "未识别"}`,
+        `该降频项：${report.low_value_high_time_activity || "未识别"}`,
+        `时间是否错配：${report.time_mismatch_text}`,
         "",
         "结尾金句：",
         report.closing_quote
@@ -1866,6 +2341,7 @@
       downloadFile(buildFileName(".txt"), txt, "text/plain;charset=utf-8");
     }
 
+    
     function downloadHtmlReport() {
       const report = buildReportPayload();
       const html = `
@@ -1878,53 +2354,114 @@
   <style>
     body {
       margin: 0;
-      padding: 28px 18px;
+      padding: 30px 20px;
       font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
       background: #f5f7fb;
       color: #18202d;
     }
     .wrap {
-      max-width: 780px;
+      max-width: 980px;
       margin: 0 auto;
       background: #fff;
-      border-radius: 24px;
-      padding: 28px;
+      border-radius: 28px;
+      padding: 30px;
       box-shadow: 0 20px 48px rgba(17, 24, 39, 0.10);
       border: 1px solid rgba(21, 33, 56, 0.08);
     }
     .chip {
       display: inline-block;
-      padding: 8px 12px;
+      padding: 9px 14px;
       border-radius: 999px;
       background: rgba(46, 91, 255, 0.1);
       color: #2e5bff;
       font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 12px;
+      font-weight: 800;
+      margin-bottom: 14px;
     }
     h1 {
-      margin: 0 0 14px;
-      font-size: 30px;
-      line-height: 1.2;
+      margin: 0 0 12px;
+      font-size: 36px;
+      line-height: 1.15;
     }
     p {
-      line-height: 1.8;
-      font-size: 15px;
+      line-height: 1.9;
+      font-size: 16px;
+      margin: 0;
     }
-    .block {
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
       margin-top: 18px;
-      padding: 16px 18px;
-      border-radius: 18px;
+    }
+    .summary,
+    .side {
+      padding: 18px;
+      border-radius: 20px;
       border: 1px solid rgba(21, 33, 56, 0.08);
       background: #fbfcff;
+    }
+    .side {
+      display: grid;
+      gap: 12px;
     }
     .label {
       font-size: 13px;
       color: #6a7381;
-      font-weight: 700;
+      font-weight: 800;
       margin-bottom: 8px;
       text-transform: uppercase;
       letter-spacing: 0.04em;
+    }
+    .block {
+      margin-top: 18px;
+      padding: 18px 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(21, 33, 56, 0.08);
+      background: #fbfcff;
+    }
+    .metric-grid {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .metric-card {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(21, 33, 56, 0.08);
+      background: #fff;
+    }
+    .metric-card strong {
+      display: block;
+      font-size: 13px;
+      color: #6a7381;
+      margin-bottom: 8px;
+    }
+    .metric-value {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .metric-tone {
+      font-size: 13px;
+      color: #6a7381;
+      font-weight: 800;
+      margin-left: 8px;
+    }
+    .bar {
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(21, 33, 56, 0.08);
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .bar span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, #2e5bff 0%, #7b93ff 100%);
+      border-radius: inherit;
     }
     ol {
       margin: 10px 0 0 20px;
@@ -1933,11 +2470,32 @@
     li {
       line-height: 1.9;
       margin-bottom: 8px;
+      font-size: 16px;
+    }
+    .quote {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(46,91,255,0.10), rgba(123,147,255,0.06));
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.9;
     }
     .meta {
       margin-top: 18px;
-      font-size: 14px;
+      font-size: 15px;
       color: #6a7381;
+      line-height: 1.8;
+    }
+    @media print {
+      body {
+        padding: 0;
+        background: #fff;
+      }
+      .wrap {
+        box-shadow: none;
+        border: none;
+      }
     }
   </style>
 </head>
@@ -1947,14 +2505,49 @@
     <h1>聚焦评估报告</h1>
     <p>${escapeHtml(report.personal_intro)}</p>
 
+    <div class="hero">
+      <div class="summary">
+        <div class="label">一句话判断</div>
+        <p>${escapeHtml(report.one_liner)}</p>
+      </div>
+      <div class="side">
+        <div>
+          <div class="label">主线候选</div>
+          <p>${escapeHtml(report.strongest_activity_name || "未识别")}</p>
+        </div>
+        <div>
+          <div class="label">该降频项</div>
+          <p>${escapeHtml(report.low_value_high_time_activity || "未识别")}</p>
+        </div>
+        <div>
+          <div class="label">时间错配</div>
+          <p>${escapeHtml(report.time_mismatch_text)}</p>
+        </div>
+      </div>
+    </div>
+
     <div class="block">
-      <div class="label">一句话判断</div>
-      <p>${escapeHtml(report.one_liner)}</p>
+      <div class="label">四项指标</div>
+      <div class="metric-grid">
+        ${report.metrics.map((item) => `
+          <div class="metric-card">
+            <strong>${escapeHtml(item.label)}</strong>
+            <div class="metric-value">${item.value}<span class="metric-tone">${escapeHtml(item.tone)}</span></div>
+            <div class="bar"><span style="width:${item.value}%"></span></div>
+            <p>${escapeHtml(item.description)}</p>
+          </div>
+        `).join("")}
+      </div>
     </div>
 
     <div class="block">
       <div class="label">优势说明</div>
       <p>${escapeHtml(report.strength_text)}</p>
+    </div>
+
+    <div class="block">
+      <div class="label">进一步解释</div>
+      <p>${escapeHtml(report.reasoning_summary || "你的问题不在能力本身，而在主线和时间还没完全站到同一边。")}</p>
     </div>
 
     <div class="block">
@@ -1964,10 +2557,7 @@
       </ol>
     </div>
 
-    <div class="block">
-      <div class="label">结尾金句</div>
-      <p>${escapeHtml(report.closing_quote)}</p>
-    </div>
+    <div class="quote">${escapeHtml(report.closing_quote)}</div>
 
     <div class="meta">
       姓名：${escapeHtml(report.student_name || "同学")}<br />
@@ -2139,26 +2729,68 @@
       `;
     }
 
+    
     function renderStepSix() {
       const result = getDisplayResultModel();
       const local = state.local_rules || {};
       const adviceList = normalizeAdviceList(result.advice_list, [
-        "先把最重要的一件事明确写下来，别再默认所有事情都同等重要。",
+        "先把最重要的一件事写出来，别再默认所有事情都同等重要。",
         "给当前低回报事务设上限，别让它无限扩张。",
         "接下来 7 天，安排两次固定推进时段，把建议真的做一遍。"
       ]);
+      const metrics = buildMetricViewModels(result.metrics || {}, local);
 
       return `
         <section class="step-panel">
           <article class="result-card" id="resultPrintable">
             <div class="status-chip">状态标签 · ${escapeHtml(result.title)}</div>
-            <p class="result-intro">${escapeHtml(buildPersonalIntro())}</p>
+            <p class="result-intro">${escapeHtml(result.personal_intro || buildPersonalIntro())}</p>
             <h2 class="result-title">${escapeHtml(result.title)}</h2>
-            <p class="result-one-liner">${escapeHtml(result.one_liner)}</p>
+
+            <div class="metric-hero">
+              <div class="metric-summary-card">
+                <div class="summary-kicker">结果摘要</div>
+                <p class="summary-copy">${escapeHtml(result.one_liner)}</p>
+                <div class="signal-list">
+                  ${renderSignalChip(local.strongest_activity_name ? `主线候选：${local.strongest_activity_name}` : "主线仍待确认", "positive")}
+                  ${renderSignalChip(local.low_value_high_time_activity ? `降频对象：${local.low_value_high_time_activity}` : "暂无明显拖拽项", local.low_value_high_time_activity ? "warning" : "primary")}
+                  ${renderSignalChip(state.strength_confirmation ? `优势画像：${state.strength_confirmation}` : "优势画像待确认", "primary")}
+                </div>
+              </div>
+
+              <div class="metric-side-note">
+                <div class="mini-note">
+                  <strong>一句人话</strong>
+                  <span>${escapeHtml(result.reasoning_summary || "你的问题不是没潜力，而是时间和主线还没真正站队。")}</span>
+                </div>
+                <div class="mini-note">
+                  <strong>优势说明</strong>
+                  <span>${escapeHtml(result.strength_text)}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="result-divider"></div>
 
             <div class="result-section">
-              <div class="result-section-title">优势说明</div>
-              <div class="strength-card">${escapeHtml(result.strength_text)}</div>
+              <div class="result-section-title">聚焦画像 · 四项指标</div>
+              <div class="metric-grid">
+                ${metrics.map((item) => renderMetricCard(item)).join("")}
+              </div>
+            </div>
+
+            <div class="result-section">
+              <div class="result-section-title">怎么理解这份结果</div>
+              <div class="report-interpretation">
+                <div class="interpret-item">
+                  <strong>你的节奏问题</strong>
+                  ${escapeHtml(explainOverallPattern(metrics, local))}
+                </div>
+                <div class="interpret-item">
+                  <strong>现在最该做的动作</strong>
+                  ${escapeHtml(explainPriorityMove(metrics, local))}
+                </div>
+              </div>
             </div>
 
             <div class="result-section">
@@ -2167,14 +2799,17 @@
                 ${adviceList.map((item, index) => `
                   <div class="advice-item">
                     <div class="advice-index">${index + 1}</div>
-                    <div class="advice-text">${escapeHtml(item)}</div>
+                    <div class="advice-text">
+                      ${escapeHtml(item)}
+                      <span class="advice-note">${escapeHtml(getAdviceEcho(index, item))}</span>
+                    </div>
                   </div>
                 `).join("")}
               </div>
             </div>
 
             <div class="result-section">
-              <div class="result-section-title">结尾</div>
+              <div class="result-section-title">收尾</div>
               <p class="closing-quote">${escapeHtml(result.closing_quote)}</p>
             </div>
 
@@ -2193,15 +2828,14 @@
               </div>
               <div class="meta-card">
                 <strong>时间是否错配</strong>
-                ${local.time_mismatch_flag ? "是。你最重要的事和最耗时的事不一致。" : "暂时不明显。你的时间分配与重点还算一致。"}
+                ${local.time_mismatch_flag ? "是。你嘴上最重要的，和日历里最耗时的，还不是同一件。" : "暂时不明显。你的时间分配与重点还算一致。"}
               </div>
             </div>
 
             <div class="download-zone">
               <h3 class="download-title">下载这份结果</h3>
               <p class="download-note">
-                你可以下载 TXT 报告、HTML 报告，或者直接打印 / 保存为 PDF。
-                如果姓名没填，报告里会默认用“同学”称呼。
+                TXT 适合留档，HTML 是可视化报告，打印后可直接存成 PDF。姓名没填时，报告会默认用“同学”称呼。
               </p>
               <div class="download-actions">
                 <button class="btn btn-secondary" type="button" data-download="txt">下载 TXT 报告</button>
@@ -2323,6 +2957,7 @@
       `;
     }
 
+    
     function normalizeStrengthCandidates(data) {
       let candidates = [];
 
@@ -2336,23 +2971,38 @@
         candidates = data.list;
       }
 
-      candidates = candidates
+      const normalized = candidates
         .map((item) => {
-          if (typeof item === "string") return item.trim();
-          if (item && typeof item === "object") {
-            return String(item.label || item.name || item.value || "").trim();
+          if (typeof item === "string") {
+            return { type: item.trim(), reason: "" };
           }
-          return "";
+          if (item && typeof item === "object") {
+            return {
+              type: String(item.type || item.label || item.name || item.value || "").trim(),
+              reason: String(item.reason || item.description || "").trim()
+            };
+          }
+          return { type: "", reason: "" };
         })
-        .filter(Boolean)
-        .filter((item, index, arr) => DEFAULT_STRENGTH_OPTIONS.includes(item) && arr.indexOf(item) === index);
+        .filter((item) => item.type && DEFAULT_STRENGTH_OPTIONS.includes(item.type));
 
-      if (candidates.length < 2) {
-        const fallback = getFallbackStrengthCandidates(state);
-        candidates = dedupeArray([...candidates, ...fallback]);
+      const fallbackMap = getFallbackStrengthCandidateCards(state);
+      const merged = normalized.map((item) => {
+        const fallback = fallbackMap.find((x) => x.type === item.type);
+        return {
+          type: item.type,
+          reason: item.reason || (fallback && fallback.reason) || buildStrengthReason(item.type, state, state.local_rules || {})
+        };
+      });
+
+      const deduped = dedupeCandidateObjects(merged);
+
+      if (deduped.length < 2) {
+        const supplement = fallbackMap.filter((item) => !deduped.some((x) => x.type === item.type));
+        return [...deduped, ...supplement].slice(0, 3);
       }
 
-      return candidates.slice(0, 3);
+      return deduped.slice(0, 3);
     }
 
     function normalizeDiagnosisData(data, fallback) {
@@ -2370,29 +3020,40 @@
       return output;
     }
 
+    
     function normalizeRenderedResult(data, diagnosis) {
       const diagnosisView = renderDiagnosisResult(diagnosis || {});
       const adviceList = normalizeAdviceList(data && data.advice_list, diagnosisView.advice_list);
       return {
+        ...diagnosisView,
         title: String((data && data.title) || diagnosisView.title || "聚焦反馈"),
+        personal_intro: String((data && data.personal_intro) || diagnosisView.personal_intro || buildPersonalIntro()),
         one_liner: String((data && data.one_liner) || diagnosisView.one_liner || ""),
         strength_text: String((data && data.strength_text) || diagnosisView.strength_text || ""),
         advice_list: adviceList,
-        closing_quote: String((data && data.closing_quote) || diagnosisView.closing_quote || "")
+        closing_quote: String((data && data.closing_quote) || diagnosisView.closing_quote || ""),
+        reasoning_summary: String((data && data.reasoning_summary) || diagnosisView.reasoning_summary || ""),
+        metrics: diagnosisView.metrics
       };
     }
 
+    
     function getDisplayResultModel() {
+      const diagnosisView = state.diagnosis_result && Object.keys(state.diagnosis_result).length
+        ? renderDiagnosisResult(state.diagnosis_result)
+        : renderFallbackResult();
+
       if (state.rendered_result && state.rendered_result.title) {
         return {
+          ...diagnosisView,
           ...state.rendered_result,
-          advice_list: normalizeAdviceList(state.rendered_result.advice_list, renderDiagnosisResult(state.diagnosis_result).advice_list)
+          advice_list: normalizeAdviceList(state.rendered_result.advice_list, diagnosisView.advice_list),
+          metrics: diagnosisView.metrics,
+          reasoning_summary: state.rendered_result.reasoning_summary || diagnosisView.reasoning_summary
         };
       }
-      if (state.diagnosis_result && Object.keys(state.diagnosis_result).length) {
-        return renderDiagnosisResult(state.diagnosis_result);
-      }
-      return renderFallbackResult();
+
+      return diagnosisView;
     }
 
     function getFallbackStrengthCandidates(currentState) {
@@ -2523,8 +3184,11 @@
       return "稳定耐力型";
     }
 
+    
     function buildReportPayload() {
       const result = getDisplayResultModel();
+      const local = state.local_rules || {};
+      const metrics = buildMetricViewModels(result.metrics || {}, local);
       const today = new Date();
       const dateDisplay = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
       const nameForDisplay = (state.student_name || "").trim() || "同学";
@@ -2539,8 +3203,13 @@
         advice_list: normalizeAdviceList(result.advice_list, []),
         closing_quote: result.closing_quote,
         date_display: dateDisplay,
-        personal_intro: buildPersonalIntro(),
-        filename_base: filenameBase
+        personal_intro: result.personal_intro || buildPersonalIntro(),
+        filename_base: filenameBase,
+        reasoning_summary: result.reasoning_summary || "",
+        metrics,
+        strongest_activity_name: local.strongest_activity_name || "",
+        low_value_high_time_activity: local.low_value_high_time_activity || "",
+        time_mismatch_text: local.time_mismatch_flag ? "是。你嘴上最重要的，和日历里最耗时的，还不是同一件。" : "暂时不明显。你的时间分配与重点还算一致。"
       };
     }
 
@@ -2611,6 +3280,329 @@
 
     function escapeAttr(value) {
       return escapeHtml(value).replace(/"/g, "&quot;");
+    }
+
+
+
+    function normalizeCandidateList(list) {
+      if (!Array.isArray(list)) return [];
+      return list
+        .map((item) => {
+          if (typeof item === "string") {
+            return { type: item.trim(), reason: "" };
+          }
+          return {
+            type: String(item && item.type || "").trim(),
+            reason: String(item && item.reason || "").trim()
+          };
+        })
+        .filter((item) => item.type);
+    }
+
+    function dedupeCandidateObjects(list) {
+      return list.filter((item, index, arr) => arr.findIndex((x) => x.type === item.type) === index);
+    }
+
+    function getFallbackStrengthCandidateCards(currentState) {
+      const local = currentState.local_rules && Object.keys(currentState.local_rules).length
+        ? currentState.local_rules
+        : runLocalRules(currentState);
+
+      const base = getFallbackStrengthCandidates(currentState)
+        .map((type) => ({
+          type,
+          reason: buildStrengthReason(type, currentState, local)
+        }));
+
+      return dedupeCandidateObjects(base).slice(0, 3);
+    }
+
+    function buildStrengthReason(type, currentState, local) {
+      const strongest = (currentState.activities || []).find((item) => item.name.trim() === String(local.strongest_activity_name || "").trim());
+      const defaultReason = {
+        "持续深挖型": "你更像那种把一件事越做越深的人。不是一上来就炸场，但只要给足连续时间，就能把成果慢慢压出来。",
+        "项目推进型": "你在有节点、有交付、有推进感的场景里更容易进入状态。给你一个目标，你更擅长往前拱。",
+        "表达输出型": "你的优势不只是理解，更在于说清楚、讲明白、把想法转成别人能接住的表达。",
+        "组织协同型": "你更像能把人和事拢到一起的人。事情散着时，你反而更容易看见秩序。",
+        "创意探索型": "你不是靠标准答案出活的人。给你一点空间，你更容易做出有辨识度的东西。",
+        "稳定耐力型": "你最值钱的地方，不是爆发，而是能把一件不显山不露水的事稳稳做下去。",
+        "还不确定 / 系统看走眼了": "现在这些标签都不够像你。先不急着认领人设，诚实地保留空白，也是很强的判断。"
+      }[type] || "你有自己的节奏，只是这股劲头还没被摆到最合适的位置。";
+
+      if (!strongest) return defaultReason;
+
+      if (type === "持续深挖型") {
+        return `你在「${strongest.name}」上已经有一点持续推进的样子了。它不是最热闹的选项，但很可能是最能沉淀资产的那条线。`;
+      }
+      if (type === "项目推进型") {
+        return `你在「${strongest.name}」这类有节点、有结果的事情上更容易起势。你不是靠空想驱动，更像靠推进把局面做出来。`;
+      }
+      if (type === "组织协同型") {
+        return `你做事不一定最爱单兵冲锋，但更擅长把节奏、人和资源拢到一起。这种能力放对位置，后劲很大。`;
+      }
+      if (type === "创意探索型") {
+        return `你一旦遇到愿意投入、又有空间发挥的事情，状态会明显不一样。那种“越做越有劲”的感觉，不该被杂务冲掉。`;
+      }
+      if (type === "稳定耐力型") {
+        return `从你的填写看，你不是靠三分钟热度顶着走的人。你更适合把连续时间压在一条值得长期积累的线里。`;
+      }
+      if (type === "表达输出型") {
+        return `你很可能不是纯闷头型。你更适合在“梳理、输出、讲清楚、做成可展示成果”这类场景里放大存在感。`;
+      }
+      return defaultReason;
+    }
+
+    function getProfileNarrative(local) {
+      const tag = local.preliminary_profile_tag || "稳步积累型";
+      const map = {
+        "高忙碌低聚焦型": "你不是没在干活，而是几条线一起抢镜，导致真正值得押注的那件事，一直没拿到完整时间。",
+        "主线模糊型": "你的问题不是懒，是目标、时间和能力没完全对齐。事情都在做，但还没有哪件事真正坐上主位。",
+        "时间错配型": "你心里知道哪件事重要，但日历并不买账。嘴上说主线，时间却还在给别的事务站台。",
+        "已有优势但用错地方型": "你其实已经有一块能打的地方，只是它还没被接到当前目标上，所以力气出了，资产感却不够强。",
+        "已聚焦但噪音过多型": "主线并不是没有，只是周围的杂音太勤，主线老被打断，气质有了，节奏还差一点狠劲。",
+        "稳步积累型": "你已经有一点主线意识了。现在最该做的，不是再加项目，而是把节奏再收紧一点。"
+      };
+      return map[tag] || "你现在更需要的是把最值得投入的那件事，重新放回前排。";
+    }
+
+    function getStrengthConfidence(type, currentState, local) {
+      const q = currentState.scale_answers || {};
+      const strongestName = String(local.strongest_activity_name || "").trim();
+      const strongest = (currentState.activities || []).find((item) => item.name.trim() === strongestName) || {};
+      let score = 58;
+
+      if (type === "持续深挖型") {
+        if (["课程学习", "项目/科研"].includes(strongest.category)) score += 12;
+        if (Number(q.q7) >= 4) score += 8;
+        if (Number(q.q8) >= 4) score += 10;
+        if (Number(local.mainline_clarity_local) >= 60) score += 6;
+      } else if (type === "项目推进型") {
+        if (["项目/科研", "竞赛/考试", "实习/兼职"].includes(strongest.category)) score += 14;
+        if (Number(q.q6) >= 4) score += 7;
+        if (Number(local.focus_score_local) >= 55) score += 5;
+      } else if (type === "表达输出型") {
+        if (String(currentState.optional_strength_feedback || "").includes("说")) score += 8;
+        if (["社团/学生工作", "课程学习"].includes(strongest.category)) score += 6;
+        score += 4;
+      } else if (type === "组织协同型") {
+        if (["社团/学生工作"].includes(strongest.category)) score += 14;
+        if (Number(q.q6) >= 4) score += 6;
+        if (Number(q.q1) >= 3) score += 4;
+      } else if (type === "创意探索型") {
+        if (["兴趣/自我提升", "其他"].includes(strongest.category)) score += 12;
+        if (Number(q.q8) >= 4) score += 5;
+        if (String(strongest.energy_state || "") === "越做越有劲") score += 8;
+      } else if (type === "稳定耐力型") {
+        if (Number(q.q8) >= 4) score += 10;
+        if (Number(q.q1) >= 3) score += 6;
+        if (Number(local.mainline_clarity_local) >= 55) score += 8;
+      } else if (type === "还不确定 / 系统看走眼了") {
+        score = 50;
+        if (Number(local.mainline_clarity_local) < 45) score += 8;
+        if (!currentState.strength_confirmation) score += 6;
+      }
+
+      return clamp(Math.round(score), 48, 92);
+    }
+
+    function getStrengthSignalTags(type, currentState, local) {
+      const strongestName = String(local.strongest_activity_name || "").trim();
+      const strongest = (currentState.activities || []).find((item) => item.name.trim() === strongestName) || {};
+      const tags = [];
+
+      if (strongest.goal_relevance === "高相关") tags.push("和当前目标贴得近");
+      if (strongest.achievement_level && strongest.achievement_level !== "刚开始/只是参与") tags.push("不只是参与");
+      if (strongest.energy_state === "越做越有劲" || strongest.energy_state === "比较投入") tags.push("做起来不全靠硬撑");
+      if (local.time_mismatch_flag) tags.push("需要把时间拉回主线");
+      if (Number(local.mainline_clarity_local) >= 60) tags.push("主线意识不差");
+
+      if (type === "项目推进型") tags.unshift("适合节点型任务");
+      if (type === "持续深挖型") tags.unshift("适合长期积累");
+      if (type === "组织协同型") tags.unshift("适合拢人和节奏");
+      if (type === "表达输出型") tags.unshift("适合做成可展示成果");
+      if (type === "创意探索型") tags.unshift("适合留一点空间感");
+      if (type === "稳定耐力型") tags.unshift("适合慢热但持久");
+      if (type === "还不确定 / 系统看走眼了") {
+        return ["暂不认领标签", "先保留空白", "比硬配人设强"];
+      }
+
+      return dedupeArray(tags).slice(0, 4);
+    }
+
+    function renderStrengthCandidateCard(item, index, local) {
+      const type = item.type;
+      const checked = state.strength_confirmation === type;
+      const score = getStrengthConfidence(type, state, local);
+      const tags = getStrengthSignalTags(type, state, local);
+      const scoreText = score >= 82 ? "高匹配" : score >= 68 ? "比较像" : score >= 56 ? "可考虑" : "保留观察";
+
+      return `
+        <label class="candidate-card">
+          <input
+            type="radio"
+            name="strength_confirmation_card"
+            value="${escapeAttr(type)}"
+            data-field="strength_confirmation"
+            ${checked ? "checked" : ""}
+          />
+          <span class="candidate-card-body">
+            <div class="candidate-top">
+              <span class="candidate-title">${escapeHtml(type)}</span>
+              <span class="candidate-score">${scoreText} · ${score}</span>
+            </div>
+            <div class="match-bar"><span style="width:${score}%"></span></div>
+            <div class="candidate-tag-list">
+              ${tags.map((tag) => `<span class="candidate-tag">${escapeHtml(tag)}</span>`).join("")}
+            </div>
+            <p class="candidate-reason">${escapeHtml(item.reason || buildStrengthReason(type, state, local))}</p>
+            <p class="candidate-footnote">${escapeHtml(getStrengthFootnote(type, score))}</p>
+          </span>
+        </label>
+      `;
+    }
+
+    function getStrengthFootnote(type, score) {
+      if (type === "还不确定 / 系统看走眼了") {
+        return "这不是否定自己，而是拒绝随便认领一个不贴身的标签。";
+      }
+      if (score >= 82) return "这张卡不只是好看，和你当前的真实投入也比较对得上。";
+      if (score >= 68) return "这张卡有明显贴合点，值得优先考虑。";
+      return "这张卡不算离谱，但还需要你自己判断它是不是你真正想押注的那股劲。";
+    }
+
+    function renderSignalChip(text, tone) {
+      return `<span class="signal-chip ${escapeAttr(tone || "primary")}">${escapeHtml(text)}</span>`;
+    }
+
+    function buildMetricViewModels(metrics, local) {
+      const safeMetrics = {
+        focus_level: clamp(Number(metrics.focus_level || local.focus_score_local || 58), 0, 100),
+        mainline_clarity: clamp(Number(metrics.mainline_clarity || local.mainline_clarity_local || 60), 0, 100),
+        time_mismatch: clamp(Number(metrics.time_mismatch || (local.time_mismatch_flag ? 84 : 32)), 0, 100),
+        comparison_drive: clamp(Number(metrics.comparison_drive || local.comparison_drive_local || 40), 0, 100)
+      };
+
+      return [
+        {
+          key: "focus_level",
+          label: "聚焦度",
+          value: safeMetrics.focus_level,
+          tone: getMetricTone(safeMetrics.focus_level, false),
+          description: explainMetric("focus_level", safeMetrics.focus_level)
+        },
+        {
+          key: "mainline_clarity",
+          label: "主线清晰度",
+          value: safeMetrics.mainline_clarity,
+          tone: getMetricTone(safeMetrics.mainline_clarity, false),
+          description: explainMetric("mainline_clarity", safeMetrics.mainline_clarity)
+        },
+        {
+          key: "time_mismatch",
+          label: "时间错配指数",
+          value: safeMetrics.time_mismatch,
+          tone: getMetricTone(safeMetrics.time_mismatch, true),
+          description: explainMetric("time_mismatch", safeMetrics.time_mismatch)
+        },
+        {
+          key: "comparison_drive",
+          label: "比较驱动指数",
+          value: safeMetrics.comparison_drive,
+          tone: getMetricTone(safeMetrics.comparison_drive, true),
+          description: explainMetric("comparison_drive", safeMetrics.comparison_drive)
+        }
+      ];
+    }
+
+    function getMetricTone(value, reverse) {
+      if (!reverse) {
+        if (value >= 80) return "很稳";
+        if (value >= 65) return "在线";
+        if (value >= 50) return "可拉升";
+        return "偏散";
+      }
+      if (value >= 80) return "偏高";
+      if (value >= 65) return "有点抢戏";
+      if (value >= 50) return "可控";
+      return "不重";
+    }
+
+    function explainMetric(key, value) {
+      if (key === "focus_level") {
+        if (value >= 80) return "你已经有比较明确的节奏感，接下来拼的是持续兑现。";
+        if (value >= 65) return "主线意识在线，但还会被杂务截流。";
+        if (value >= 50) return "不是没方向，只是方向还没拿到足够整块时间。";
+        return "现在更像在多线拉扯，主线还没有坐稳。";
+      }
+      if (key === "mainline_clarity") {
+        if (value >= 80) return "你大概率知道自己这学期最该押注什么。";
+        if (value >= 65) return "你对主线已有判断，但还可以再讲得更狠一点。";
+        if (value >= 50) return "你隐约知道重点在哪，只是定义还不够硬。";
+        return "目标、能力和时间还没完全对齐，容易边做边摇摆。";
+      }
+      if (key === "time_mismatch") {
+        if (value >= 80) return "你最重要的事和最耗时的事，明显不是同一件。";
+        if (value >= 65) return "日历正在替你做决定，主线还没真正拿回排班权。";
+        if (value >= 50) return "有一点偏移，及时收手还来得及。";
+        return "目前时间分配和主线大体站在一边。";
+      }
+      if (key === "comparison_drive") {
+        if (value >= 80) return "你的很多动作容易被周围节奏带偏。";
+        if (value >= 65) return "你会受环境影响，偶尔容易把别人的主线当自己的。";
+        if (value >= 50) return "比较心态有一点，但还没坐到主位。";
+        return "你相对能守住自己的节奏，不太容易被别人带跑。";
+      }
+      return "这是一个辅助判断信号。";
+    }
+
+    function renderMetricCard(item) {
+      return `
+        <div class="metric-card">
+          <strong>${escapeHtml(item.label)}</strong>
+          <div class="metric-head">
+            <div class="metric-value">${item.value}</div>
+            <div class="metric-tone">${escapeHtml(item.tone)}</div>
+          </div>
+          <div class="metric-bar"><span style="width:${item.value}%"></span></div>
+          <p class="metric-desc">${escapeHtml(item.description)}</p>
+        </div>
+      `;
+    }
+
+    function explainOverallPattern(metrics, local) {
+      const map = Object.fromEntries(metrics.map((item) => [item.key, item.value]));
+      if (map.time_mismatch >= 70) {
+        return "你现在最大的问题不叫“没方向”，而叫“时间没站队”。主线在脑子里，杂事在日历里，所以累是真累，沉淀却一般。";
+      }
+      if (map.focus_level < 55) {
+        return "你并不是没有上进心，只是几条线同时抢戏，导致注意力像被分期付款，哪一边都没吃饱。";
+      }
+      if (map.comparison_drive >= 65) {
+        return "你的节奏容易被外部参照带偏。别人一出成果，你就想临时换轨，这会让主线一直留在“差一点”的状态。";
+      }
+      return "你已经有一定聚焦基础。现在真正要做的，不是再扩项目，而是把值得长期积累的那条线再压实一点。";
+    }
+
+    function explainPriorityMove(metrics, local) {
+      const map = Object.fromEntries(metrics.map((item) => [item.key, item.value]));
+      const strongest = local.strongest_activity_name || "主线事项";
+      const lowValue = local.low_value_high_time_activity || "低回报事务";
+      if (map.time_mismatch >= 70) {
+        return `先给「${strongest}」抢回完整时间块，再给「${lowValue}」设上限。先改排班，别先改情绪。`;
+      }
+      if (map.mainline_clarity < 55) {
+        return `先用一句话定义「${strongest}」这学期到底要做到什么，再决定哪些事值得留下。没有定义，努力很容易白跑。`;
+      }
+      return `保住「${strongest}」的连续推进，再主动下调「${lowValue}」的存在感。别什么都做，先把最该做的做得像样。`;
+    }
+
+    function getAdviceEcho(index, text) {
+      const notes = [
+        "先让主线坐主位，再决定谁能旁听。",
+        "礼貌可以留着，完整时间块别再随便外借。",
+        "动作比口号值钱。排进日历，事情才算真的开始。"
+      ];
+      return notes[index] || "把建议变成排程，它才不会只停在看起来很对。";
     }
 
     window.addEventListener("DOMContentLoaded", initApp);
