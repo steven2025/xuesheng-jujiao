@@ -100,6 +100,14 @@
       overflow: visible;
     }
 
+    .app-shell.login-locked .progress-wrap,
+    .app-shell.login-locked .content-wrap,
+    .app-shell.login-locked .action-bar {
+      opacity: 0.45;
+      pointer-events: none;
+      user-select: none;
+    }
+
     .app-header {
       padding: 28px 28px 14px;
       display: flex;
@@ -1425,7 +1433,7 @@
   <div class="blur-orb orb-b"></div>
 
   <div class="page-wrap">
-    <section class="app-shell">
+    <section class="app-shell" id="appShell">
       <header class="app-header">
         <div>
           <div class="eyebrow">聚焦战略体验 · 单页原型</div>
@@ -1433,14 +1441,14 @@
           <p class="app-subtitle" id="stepHint">方向不表态，时间就会替你表态。</p>
         </div>
         <button class="profile-toggle" id="profileToggle" type="button">
-          资料框
-          <span class="mini-badge" id="profileStatusBadge">0/3</span>
+          登录框
+          <span class="mini-badge" id="profileStatusBadge">未确认</span>
         </button>
       </header>
 
       <section class="profile-drawer" id="profileDrawer">
         <p class="profile-note">
-          这不是登录，只是轻量身份信息。现在不填也能继续，但最终结果前会提醒你补一下，这样反馈会更像写给你本人。
+          这是登录框。请先填写下方信息并点击“确认登录”，未确认登录前无法使用本程序。
         </p>
         <div class="profile-grid">
           <div class="input-wrap">
@@ -1461,6 +1469,9 @@
             <label for="major">major · 专业</label>
             <input class="input" id="major" data-field="major" type="text" placeholder="例如：计算机 / 材料 / 金融" />
           </div>
+        </div>
+        <div class="text-right" style="margin-top: 14px;">
+          <button class="btn btn-primary" id="loginConfirmBtn" type="button" data-login-confirm>确认登录</button>
         </div>
       </section>
 
@@ -1592,6 +1603,7 @@
       student_name: "",
       grade: "",
       major: "",
+      login_confirmed: false,
       goal: "",
       main_confusion: "",
       activities: [
@@ -1623,6 +1635,10 @@
       syncProfileDrawerInputs();
       renderProgress();
       renderStep();
+      toggleLoginLock();
+      if (!state.login_confirmed) {
+        document.getElementById("profileDrawer").classList.add("open");
+      }
     }
 
     function renderProgress() {
@@ -1666,6 +1682,7 @@
       syncProfileDrawerInputs();
       saveState();
       renderProgress();
+      toggleLoginLock();
     }
 
     function bindEvents() {
@@ -1676,6 +1693,12 @@
         const toggle = event.target.closest("#profileToggle");
         if (toggle) {
           document.getElementById("profileDrawer").classList.toggle("open");
+          return;
+        }
+
+        const loginConfirmBtn = event.target.closest("[data-login-confirm]");
+        if (loginConfirmBtn) {
+          handleLoginConfirm();
           return;
         }
 
@@ -1737,12 +1760,48 @@
         return;
       }
 
+      if (["student_name", "grade", "major"].includes(target.dataset.field)) {
+        state.login_confirmed = false;
+      }
+
       saveState();
       updateProfileStatus();
+      toggleLoginLock();
+
+      const actionBar = document.getElementById("actionBar");
+      if (actionBar && ["student_name", "grade", "major"].includes(target.dataset.field)) {
+        actionBar.innerHTML = renderActionButtons();
+      }
 
       if (state.current_step === 6 && ["student_name", "grade", "major"].includes(target.dataset.field)) {
         renderStep();
       }
+    }
+
+
+    function isLoginInfoComplete() {
+      return [state.student_name, state.grade, state.major].every((item) => String(item || "").trim());
+    }
+
+    function handleLoginConfirm() {
+      if (!isLoginInfoComplete()) {
+        showToast("请先填写姓名、年级和专业，再确认登录。");
+        document.getElementById("profileDrawer").classList.add("open");
+        return;
+      }
+      state.login_confirmed = true;
+      saveState();
+      updateProfileStatus();
+      document.getElementById("profileDrawer").classList.remove("open");
+      showToast("登录已确认，现在可以使用程序。");
+      renderStep();
+    }
+
+
+    function toggleLoginLock() {
+      const shell = document.getElementById("appShell");
+      if (!shell) return;
+      shell.classList.toggle("login-locked", !state.login_confirmed);
     }
 
     function validateStep(step) {
@@ -1794,6 +1853,12 @@
     }
 
     async function handleNext() {
+      if (!state.login_confirmed) {
+        document.getElementById("profileDrawer").classList.add("open");
+        showToast("请先在右上角登录框完成确认登录。");
+        return;
+      }
+
       if (!validateStep(state.current_step)) return;
 
       if (state.current_step === 4) {
@@ -1865,6 +1930,7 @@
           diagnosis_result: parsed.diagnosis_result || {},
           rendered_result: parsed.rendered_result || {},
           strength_candidates: Array.isArray(parsed.strength_candidates) ? parsed.strength_candidates : [],
+          login_confirmed: parsed.login_confirmed === true,
           current_step: clamp(Number(parsed.current_step) || 1, 1, TOTAL_STEPS)
         };
       } catch (error) {
@@ -1882,10 +1948,10 @@
       } catch (error) {
         console.warn("resetState error:", error);
       }
-      document.getElementById("profileDrawer").classList.remove("open");
+      document.getElementById("profileDrawer").classList.add("open");
       renderStep();
       syncProfileDrawerInputs();
-      showToast("已经清空，重新开始。");
+      showToast("已经清空，请先重新确认登录。");
     }
 
     function runLocalRules(currentState) {
@@ -2067,7 +2133,6 @@
       }
     }
 
-    async 
     async function requestStrengthCandidates() {
       showLoading("先跑本地规则，再尝试拿 2-3 个优势候选。");
       const fallbackCandidates = getFallbackStrengthCandidateCards(state);
@@ -2131,7 +2196,6 @@
       saveState();
     }
 
-    async 
     async function requestRenderedResult() {
       showLoading("最后一步：把结构化诊断整理成一张更像反馈卡的结果页。");
 
@@ -2857,11 +2921,11 @@
       }
 
       const nextLabelMap = {
-        1: "继续",
-        2: "继续",
-        3: "继续",
-        4: "看优势候选",
-        5: "生成结果"
+        1: state.login_confirmed ? "继续" : "请先确认登录",
+        2: state.login_confirmed ? "继续" : "请先确认登录",
+        3: state.login_confirmed ? "继续" : "请先确认登录",
+        4: state.login_confirmed ? "看优势候选" : "请先确认登录",
+        5: state.login_confirmed ? "生成结果" : "请先确认登录"
       };
 
       return `
@@ -3241,10 +3305,9 @@
     }
 
     function updateProfileStatus() {
-      const filled = [state.student_name, state.grade, state.major].filter((item) => String(item || "").trim()).length;
       const badge = document.getElementById("profileStatusBadge");
       if (badge) {
-        badge.textContent = `${filled}/3`;
+        badge.textContent = state.login_confirmed ? "已确认" : "未确认";
       }
     }
 
